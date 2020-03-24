@@ -10,7 +10,7 @@ import { IndexService } from '../../services/index/index.service';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-    readonly title: string = 'LOG2990';
+    
     message: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
     constructor(private basicService: IndexService) {
