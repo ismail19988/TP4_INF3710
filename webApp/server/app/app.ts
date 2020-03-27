@@ -12,10 +12,11 @@ import Types from './types';
 export class Application {
     private readonly internalError: number = 500;
     app: express.Application;
-
+    session = require('express-session');
     constructor(
         @inject(Types.IndexController) private indexController: IndexController,
         @inject(Types.DateController) private dateController: DateController,
+        
     ) {
         this.app = express();
 
@@ -26,6 +27,11 @@ export class Application {
 
     private config(): void {
         // Middlewares configuration
+        this.app.use(this.session({
+            secret: 'secret',
+            resave: true,
+            saveUninitialized: true
+        }));
         this.app.use(logger('dev'));
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: true }));
@@ -37,6 +43,13 @@ export class Application {
         // Notre application utilise le routeur de notre API `Index`
         this.app.use('/api/index', this.indexController.router);
         this.app.use('/api/date', this.dateController.router);
+
+        this.app.post('/auth', function(request, response) {
+            var username = request.body.username;
+            var password = request.body.password;
+            console.log("username received from client: ", username, " password received from client: ", password);
+            response.json("send qqchose au client");
+        });
         this.errorHandling();
     }
 
@@ -49,7 +62,7 @@ export class Application {
 
         // development error handler
         // will print stacktrace
-        if (this.app.get('env') === 'development') {
+        //if (this.app.get('env') === 'development') {
             // tslint:disable-next-line:no-any
             this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
                 res.status(err.status || this.internalError);
@@ -58,7 +71,7 @@ export class Application {
                     error: err,
                 });
             });
-        }
+        //}
 
         // production error handler
         // no stacktraces leaked to user (in production env only)

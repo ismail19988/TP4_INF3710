@@ -1,4 +1,4 @@
-  // insipiration du CSS du formulaire de l'interface prise ici: https://codepen.io/shaligramk/pen/sKCJI/
+  // insipiration du code CSS du formulaire de connexion prise ici: https://codepen.io/shaligramk/pen/sKCJI/
 * {
     margin:0;
     padding:0;
@@ -71,4 +71,6 @@
     box-shadow:0px 3px 0px #292929;
   }
 
-  
+  .button:hover{
+    cursor: pointer;
+  }
