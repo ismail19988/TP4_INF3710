@@ -15,21 +15,27 @@ export class LoginComponent implements OnInit {
     @ViewChild('password', { static: false })
     passRef: ElementRef<HTMLInputElement>;
 
-    //private readonly BASE_URL: string = "http://localhost:3000/";
+    @ViewChild('state', { static: false })
+    public stateRef: ElementRef<HTMLHeadElement>;
+
+    private readonly BASE_URL: string = 'http://localhost:3000';
 
     constructor(private http: HttpClient) {}
 
     ngOnInit() {}
 
-    public connect() {
+    public async connect() {
+        this.stateRef.nativeElement.innerHTML = 'En attente du serveur...';
         this.http
-            .post<string>('http://localhost:3000/auth', { username: this.mailRef.nativeElement.value, password: this.passRef.nativeElement.value })
+            .post<boolean>(this.BASE_URL + '/auth', { username: this.mailRef.nativeElement.value, password: this.passRef.nativeElement.value })
             .pipe(catchError(this.handleError<string>('Authentification error')))
-            .subscribe(
-              (data:string) => {console.log(data)},  //changed
-              (err)=>console.log(err),
-              ()=>console.log("Done")
-            );
+            .subscribe(res => {
+                if (res) {
+                    this.stateRef.nativeElement.innerHTML = 'connexion reussie';
+                } else {
+                    this.stateRef.nativeElement.innerHTML = 'Courriel ou mot de passe incorrect';
+                }
+            });
     }
 
     private handleError<T>(request: string, result?: T): (error: Error) => Observable<T> {

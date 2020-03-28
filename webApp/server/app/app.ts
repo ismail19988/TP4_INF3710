@@ -48,7 +48,12 @@ export class Application {
             var username = request.body.username;
             var password = request.body.password;
             console.log("username received from client: ", username, " password received from client: ", password);
-            response.json("send qqchose au client");
+            setTimeout(function(){ 
+
+                response.json('true');
+            }, 3000);  
+        
+            
         });
         this.errorHandling();
     }

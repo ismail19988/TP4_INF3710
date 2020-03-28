@@ -107,15 +107,14 @@ CREATE TABLE IF NOT EXISTS netflixDB.nomination (
     categorie                VARCHAR(20),
     noFilm                   INT,
     PRIMARY KEY (categorie, noFilm),
-    --FOREIGN KEY (categorie) REFERENCES netflixDB.categorieOscar(nomCategorie),
     FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm)
 );
 CREATE TABLE IF NOT EXISTS netflixDB.personne(
     noPersonne                INT,
-    nom                     VARCHAR(20),
-    age                        INT,
-    nationalite                VARCHAR(20),
-    sexe                    VARCHAR(10),
+    nom                    	  VARCHAR(20),
+    age                       INT,
+    nationalite               VARCHAR(20),
+    sexe                      VARCHAR(10),
     PRIMARY KEY (noPersonne)
 );
 
@@ -128,7 +127,7 @@ CREATE TABLE IF NOT EXISTS netflixDB.participation (
 );
 CREATE TABLE IF NOT EXISTS netflixDB.role (
     nom                        VARCHAR(20),
-    noPersonne                INT,
+    noPersonne                 INT,
     salaire                    FLOAT,
     PRIMARY KEY (nom, noPersonne),
     FOREIGN KEY (noPersonne) REFERENCES netflixDB.personne(noPersonne)
