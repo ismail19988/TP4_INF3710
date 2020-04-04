@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { ServerCommunicationService } from '../services/index/server-communication.service';
 
 @Component({
     selector: 'app-login',
@@ -18,29 +16,29 @@ export class LoginComponent implements OnInit {
     @ViewChild('state', { static: false })
     public stateRef: ElementRef<HTMLHeadElement>;
 
-    private readonly BASE_URL: string = 'http://localhost:3000';
-
-    constructor(private http: HttpClient) {}
+    constructor(private communication: ServerCommunicationService) {}
 
     ngOnInit() {}
 
     public async connect() {
         this.stateRef.nativeElement.innerHTML = 'En attente du serveur...';
-        this.http
-            .post<boolean>(this.BASE_URL + '/auth', { username: this.mailRef.nativeElement.value, password: this.passRef.nativeElement.value })
-            .pipe(catchError(this.handleError<string>('Authentification error')))
-            .subscribe(res => {
-                if (res) {
-                    this.stateRef.nativeElement.innerHTML = 'connexion reussie';
-                } else {
-                    this.stateRef.nativeElement.innerHTML = 'Courriel ou mot de passe incorrect';
+        this.communication.authentificationRequest(this.mailRef.nativeElement.value, this.passRef.nativeElement.value).subscribe(res => {
+                let serverResponse =  res as {title:string, body:string};
+                let message  = "";
+                try {
+                    if (serverResponse.title === 'success') {
+                        message += 'Connection réussie. ' + serverResponse.body;
+                    } else if (serverResponse.title === 'badUsername') {
+                        message += 'Courriel ou mot de passe Incorrect.';
+                    } else if (serverResponse.title === 'Error') {
+                        message += "Erreur de communcation avec le serveur code de l'erreur: " + serverResponse.body;
+                    }
+                } catch(erreur) {
+                    console.log(erreur);
+                    message += "Le serveur est déconnecté. Connexion Impossible"
                 }
+                this.stateRef.nativeElement.innerHTML = message;
             });
     }
 
-    private handleError<T>(request: string, result?: T): (error: Error) => Observable<T> {
-        return (error: Error): Observable<T> => {
-            return of(result as T);
-        };
-    }
 }

@@ -1,15 +1,15 @@
-import { injectable } from "inversify";
 import * as pg from "pg";
 import "reflect-metadata";
+import { Message } from '../../../common/communication/message';
+import { schema } from "../shema";
+import { data } from "../data";
 
-@injectable()
 export class DatabaseService {
 
-    // A MODIFIER POUR VOTRE BD
     public connectionConfig: pg.ConnectionConfig = {
         user: "postgres",
         database: "Hotel",
-        password: "password",
+        password: "08047b8D",
         port: 5432,
         host: "127.0.0.1",
         keepAlive : true
@@ -18,8 +18,28 @@ export class DatabaseService {
     private pool: pg.Pool = new pg.Pool(this.connectionConfig);
 
     public constructor() {
+
         this.pool.connect();
+        this.createSchema();
     }
+
+    public async checkUsername(username:string, password:string): Promise<Message>{
+        console.log('a envoyer a la DB:', username, password);
+        return {
+            title:'success',
+            body:'Welcome, name!'
+        }
+    }
+
+    createSchema(){
+        this.pool.query(schema);
+        this.populateDB();
+    }
+
+    populateDB(){
+        this.pool.query(data);
+    }
+
 
     //queries here
 }

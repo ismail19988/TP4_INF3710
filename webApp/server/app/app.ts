@@ -2,26 +2,27 @@ import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import * as cors from 'cors';
 import * as express from 'express';
-import { inject, injectable } from 'inversify';
+import { injectable } from 'inversify';
 import * as logger from 'morgan';
-import { DateController } from './controllers/date.controller';
-import { IndexController } from './controllers/index.controller';
-import Types from './types';
+import { AuthController } from './controllers/authentification.controller';
+import { DatabaseService } from './services/DBService';
 
 @injectable()
 export class Application {
     private readonly internalError: number = 500;
     app: express.Application;
     session = require('express-session');
+    private authController: AuthController;
+
     constructor(
-        @inject(Types.IndexController) private indexController: IndexController,
-        @inject(Types.DateController) private dateController: DateController,
-        
     ) {
+        
         this.app = express();
 
-        this.config();
+        let DB: DatabaseService =  new DatabaseService();
+        this.authController =  new AuthController(DB);
 
+        this.config();
         this.bindRoutes();
     }
 
@@ -41,19 +42,8 @@ export class Application {
 
     bindRoutes(): void {
         // Notre application utilise le routeur de notre API `Index`
-        this.app.use('/api/index', this.indexController.router);
-        this.app.use('/api/date', this.dateController.router);
+        this.app.use('/auth', this.authController.router);
 
-        this.app.post('/auth', function(request, response) {
-            var username = request.body.username;
-            var password = request.body.password;
-            console.log("username received from client: ", username, " password received from client: ", password);
-            setTimeout(function(){ 
-                response.json('true');
-            }, 3000);  
-        
-            
-        });
         this.errorHandling();
     }
 
