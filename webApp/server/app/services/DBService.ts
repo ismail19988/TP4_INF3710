@@ -1,7 +1,7 @@
 import * as pg from "pg";
 import "reflect-metadata";
 import { Message } from '../../../common/communication/message';
-import { schema } from "../shema";
+import { schema } from "../schema";
 import { data } from "../data";
 
 export class DatabaseService {
@@ -9,7 +9,7 @@ export class DatabaseService {
     public connectionConfig: pg.ConnectionConfig = {
         user: "postgres",
         database: "Hotel",
-        password: "08047b8D",
+        password: "passwordHere",
         port: 5432,
         host: "127.0.0.1",
         keepAlive : true
