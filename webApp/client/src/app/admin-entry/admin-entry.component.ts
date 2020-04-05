@@ -46,26 +46,16 @@ export class AdminEntryComponent implements OnInit {
       adress: this.address.nativeElement.value,
       postalCode: this.postalCode.nativeElement.value
     }
-    
+
     this.communication.registerRequest(userData).subscribe(res => {
             let serverResponse =  res as {title:string, body:string};
             let message  = "";
             try {
-                switch(serverResponse.title) {
-                    case 'success' :
-                        message += '[Connection réussie. ' + serverResponse.body + "]";
-                        break;
-                    case 'badUsername':
-                        message += '[Courriel ou mot de passe Incorrect.'+"]";
-                        break;
-                    case 'Error':
-                        message += "[Erreur de communcation avec le serveur code de l'erreur: " + serverResponse.body+"]";
-                        break;
-                } 
+              message += "[" + serverResponse.body + "]";
             }
             catch(err) {
               console.error(err);
-                message += "[Le serveur est déconnecté. Connexion Impossible]"
+              message += "[Le serveur est déconnecté. Enregistrement Impossible]"
             }
 
             this.stateRef.nativeElement.innerHTML = message;

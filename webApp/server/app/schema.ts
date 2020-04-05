@@ -13,27 +13,25 @@ CREATE TABLE IF NOT EXISTS netflixDB.membre (
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.membreMensuel (
-	noMembre				INTEGER,
 	courriel				VARCHAR(30),
 	motDePasse				VARCHAR(100),
 	nom						VARCHAR(30),
 	adressePostale			VARCHAR(40),
 	prix_abonnement			FlOAT,
 	date_échéhance			DATE,
-	PRIMARY KEY (noMembre),
-	FOREIGN KEY (noMembre) REFERENCES netflixDB.membre(noMembre)
+	PRIMARY KEY (courriel),
+	FOREIGN KEY (courriel) REFERENCES netflixDB.membre(courriel)
 );
 
 
 CREATE TABLE IF NOT EXISTS netflixDB.membreVisionnement (
-	noMembre				INTEGER,
 	courriel				VARCHAR(30),
 	motDePasse				VARCHAR(100),
 	nom						VARCHAR(30),
 	adressePostale			VARCHAR(40),
 	nbFilms					INTEGER,
-	PRIMARY KEY (noMembre),
-	FOREIGN KEY (noMembre) REFERENCES netflixDB.membre(noMembre)
+	PRIMARY KEY (courriel),
+	FOREIGN KEY (courriel) REFERENCES netflixDB.membre(courriel)
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.carteCredit (
@@ -41,9 +39,9 @@ CREATE TABLE IF NOT EXISTS netflixDB.carteCredit (
 	Titulaire				VARCHAR(30),
 	dateExpiration			DATE,
 	CCV						INTEGER,
-	noMembre				INTEGER,
+	courriel				VARCHAR(30),
 	PRIMARY KEY (noCarte),
-	FOREIGN KEY (noMembre) REFERENCES netflixDB.membre(noMembre)
+	FOREIGN KEY (courriel) REFERENCES netflixDB.membre(courriel)
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.film (
@@ -58,13 +56,13 @@ CREATE TABLE IF NOT EXISTS netflixDB.film (
 
 
 CREATE TABLE IF NOT EXISTS netflixDB.visionnement (
-	noMembre				INTEGER,
+	courriel				VARCHAR(30),
 	noFilm					INTEGER,
 	dateVisionnement		DATE,
 	duréeVisionnement		INTEGER,
-	PRIMARY KEY (noFilm, noMembre),
+	PRIMARY KEY (noFilm, courriel),
 	FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm),
-	FOREIGN KEY (noMembre) REFERENCES netflixDB.membre(noMembre)
+	FOREIGN KEY (courriel) REFERENCES netflixDB.membre(courriel)
 	
 );
 
@@ -76,14 +74,14 @@ CREATE TABLE IF NOT EXISTS netflixDB.dvdphysique (
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.achat (
-	noMembre				INTEGER,
+	courriel				VARCHAR(30),
 	noFilm					INTEGER,
 	noDVD					VARCHAR(5),
 	coutEnvoi				FLOAT,
 	dateEnvoi				DATE,
-	PRIMARY KEY (noMembre, noFilm, noDVD),
+	PRIMARY KEY (courriel, noFilm, noDVD),
 	FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm),
-	FOREIGN KEY (noMembre) REFERENCES netflixDB.membre(noMembre)
+	FOREIGN KEY (courriel) REFERENCES netflixDB.membre(courriel)
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.ceremonie (
@@ -132,4 +130,5 @@ CREATE TABLE IF NOT EXISTS netflixDB.role (
     PRIMARY KEY (nom, noPersonne),
     FOREIGN KEY (noPersonne) REFERENCES netflixDB.personne(noPersonne)
 );
+
 `;

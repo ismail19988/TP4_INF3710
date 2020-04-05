@@ -8,7 +8,7 @@ export class DatabaseService {
 
     public connectionConfig: pg.ConnectionConfig = {
         user: "postgres",
-        database: "Hotel",
+        database: "netflix",
         password: "123456",
         port: 5432,
         host: "127.0.0.1",
@@ -21,13 +21,14 @@ export class DatabaseService {
 
         this.pool.connect();
         this.createSchema();
+
     }
 
     public async checkUsername(username:string, password:string): Promise<Message>{
         console.log('a envoyer a la DB:', username, password);
         return {
             title:'success',
-            body:'Welcome, name!'
+            body:'Enregistrement réussi.' + 'Welcome, name!'
         }
     }
 
@@ -39,6 +40,9 @@ export class DatabaseService {
     populateDB(){
         this.pool.query(data);
     }
+
+
+
 
 
     //queries here
