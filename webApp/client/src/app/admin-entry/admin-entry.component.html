@@ -8,6 +8,17 @@
     <input #password type="password" placeholder="Mot de passe"/>
     <input #address type="text" placeholder="Adresse"/>
     <input #postalCode type="text" placeholder="Code postal"/>
+
+    <div id='btnContainer'>
+        <div #vMember (mousedown)="switchMember(true);" class="button" style="text-align: center; border-style: solid; border-color: #5cb85c;" >Membre Visionnement</div>
+        <div #aMember (mousedown)="switchMember(false);" class="button" style="text-align: center;">Membre achat</div>
+    </div>
+
+    <div>
+        <input #address type="text" placeholder="Prix abonnement" [disabled] = "!membreVisionnement"/>
+        <input #postalCode type="text" placeholder="Date d'échéhance (YYYY-MM-DD)" [disabled] = "!membreVisionnement"/>
+    </div>
+    
     <div id='btnContainer'>
         <div (mousedown)="register()" class="button" value="Connection" style="text-align: center;" >Enregistrer l'utilisateur</div>
         <div (mousedown)="navigateConnectionPage()" class="button" value="Connection" style="text-align: center;" >Page de connexion</div>

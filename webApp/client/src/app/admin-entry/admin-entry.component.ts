@@ -29,6 +29,13 @@ export class AdminEntryComponent implements OnInit {
   @ViewChild('postalCode', { static: false })
   private postalCode: ElementRef<HTMLInputElement>;
 
+  @ViewChild('vMember', { static: false })
+  private vMember: ElementRef<HTMLInputElement>;
+
+  @ViewChild('aMember', { static: false })
+  private aMember: ElementRef<HTMLInputElement>;
+
+  public membreVisionnement: boolean = true;
 
   constructor(private communication: ServerCommunicationService, private router: Router) { }
 
@@ -64,6 +71,22 @@ export class AdminEntryComponent implements OnInit {
 
   navigateConnectionPage(){
     this.router.navigate(['/']);
+  }
+
+  public switchMember(vMember: boolean){
+    this.membreVisionnement = vMember
+    if(vMember){
+      this.vMember.nativeElement.style.borderStyle = "solid";
+      this.vMember.nativeElement.style.borderColor = "#5cb85c";
+      this.aMember.nativeElement.style.borderStyle = "";
+      this.aMember.nativeElement.style.borderColor = "";
+    } else {
+      this.aMember.nativeElement.style.borderStyle = "solid";
+      this.aMember.nativeElement.style.borderColor = "#5cb85c";
+      this.vMember.nativeElement.style.borderStyle = "";
+      this.vMember.nativeElement.style.borderColor = "";
+    }
+
   }
 
 }
