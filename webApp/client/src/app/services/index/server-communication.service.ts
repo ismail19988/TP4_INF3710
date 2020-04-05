@@ -11,22 +11,22 @@ export class ServerCommunicationService {
 
     constructor(private http: HttpClient) {}
 
-    authentificationRequest(username: string, password: string) {
+    authentificationRequest(data: { username: string, password: string} ) {
         return this.http
-            .post<{ title: string; body: string }>(this.BASE_URL + '/auth', { username: username, password: password })
+            .post<{ title: string; body: string }>(this.BASE_URL + '/auth', data)
             .pipe(catchError(this.handleError<string>('Authentification error')));
     }
 
     registerRequest(userData: {
-        fName: string;
-        lName: string;
-        username: string;
-        password: string;
-        adress: string;
-        postalCode: string;
-        price: string;
-        date: String;
-        vMember: boolean;
+        fName: string,
+        lName: string,
+        username: string,
+        password: string,
+        adress: string,
+        postalCode: string,
+        price: string,
+        date: String,
+        vMember: boolean
     }) {
         console.log(userData);
         return this.http
