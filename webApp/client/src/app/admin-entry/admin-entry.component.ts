@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin-entry.component.scss']
 })
 export class AdminEntryComponent implements OnInit {
+
   @ViewChild('state', { static: false })
   private stateRef: ElementRef<HTMLHeadElement>;
 
@@ -28,6 +29,12 @@ export class AdminEntryComponent implements OnInit {
 
   @ViewChild('postalCode', { static: false })
   private postalCode: ElementRef<HTMLInputElement>;
+
+  @ViewChild('price', { static: false })
+  private price: ElementRef<HTMLInputElement>;
+
+  @ViewChild('date', { static: false })
+  private date: ElementRef<HTMLInputElement>;
 
   @ViewChild('vMember', { static: false })
   private vMember: ElementRef<HTMLInputElement>;
@@ -51,7 +58,10 @@ export class AdminEntryComponent implements OnInit {
       username: this.mailRef.nativeElement.value,
       password: this.passRef.nativeElement.value,
       adress: this.address.nativeElement.value,
-      postalCode: this.postalCode.nativeElement.value
+      postalCode: this.postalCode.nativeElement.value,
+      price: this.price.nativeElement.value,
+      date: this.date.nativeElement.value,
+      vMember:this.membreVisionnement
     }
 
     this.communication.registerRequest(userData).subscribe(res => {

@@ -25,7 +25,6 @@ export class DatabaseService {
     }
 
     public async checkUsername(username:string, password:string): Promise<Message>{
-        console.log('a envoyer a la DB:', username, password);
         return {
             title:'success',
             body:'Enregistrement réussi.' + 'Welcome, name!'

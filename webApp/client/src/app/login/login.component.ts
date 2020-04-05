@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     public async connect() {
         this.stateRef.nativeElement.innerHTML = '[En attente du serveur...]';
         this.communication.authentificationRequest(this.mailRef.nativeElement.value, this.passRef.nativeElement.value).subscribe(res => {
-                let serverResponse =  res as {title:string, body:string};
+                let serverResponse =  res as {title: string, body: string};
                 let message  = "";
                 try {
                     switch(serverResponse.title) {

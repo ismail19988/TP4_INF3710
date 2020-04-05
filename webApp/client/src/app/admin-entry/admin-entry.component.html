@@ -15,10 +15,10 @@
     </div>
 
     <div>
-        <input #address type="text" placeholder="Prix abonnement" [disabled] = "!membreVisionnement"/>
-        <input #postalCode type="text" placeholder="Date d'échéhance (YYYY-MM-DD)" [disabled] = "!membreVisionnement"/>
+        <input #price type="text" placeholder="Prix abonnement" [disabled] = "!membreVisionnement"/>
+        <input #date type="text" placeholder="Date d'échéhance (YYYY-MM-DD)" [disabled] = "!membreVisionnement"/>
     </div>
-    
+
     <div id='btnContainer'>
         <div (mousedown)="register()" class="button" value="Connection" style="text-align: center;" >Enregistrer l'utilisateur</div>
         <div (mousedown)="navigateConnectionPage()" class="button" value="Connection" style="text-align: center;" >Page de connexion</div>
