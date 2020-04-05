@@ -16,6 +16,21 @@ export class ServerCommunicationService {
     .post<{title:string, body:string}>(this.BASE_URL + '/auth', { username: username, password: password})
     .pipe(catchError(this.handleError<string>('Authentification error')))
   }
+
+  registerRequest(userData:{fName: string, lName: string, username: string, password: string, adress: string, postalCode: string}){
+    console.log(userData)
+    return this.http
+    .post<{title:string, body:string}>(this.BASE_URL + '/auth',
+    {
+      fName: userData.fName,
+      lName: userData.lName,
+      username: userData.username,
+      password: userData.password,
+      adress: userData.adress,
+      postalCode: userData.postalCode
+    })
+    .pipe(catchError(this.handleError<string>('Authentification error')))
+  }
   
   private handleError<T>(request: string, result?: T): (error: Error) => Observable<T> {
     return (error: Error): Observable<T> => {

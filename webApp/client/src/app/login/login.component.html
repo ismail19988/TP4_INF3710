@@ -1,12 +1,12 @@
 <!--insipiration du code HTML formulaire de connexion prise ici: https://codepen.io/shaligramk/pen/sKCJI/-->
 <form>
     <h4> connexion au service </h4>
-    <h5 #state>[...]</h5>
+    <h5 #state>[ ]</h5>
     <input #mail type="text" placeholder="Courriel"/>
     <input #password type="password" placeholder="Mot de passe"/>
-    <div>
-        <input (mousedown)="connect()" class="button" value="Connection" style="text-align: center;" />
-        <input (mousedown)="EntreeAdmin()" class="button" value="Entrée admin" style="text-align: center; margin-left: 100px;"/>
+    <div id='btnContainer'>
+        <div (mousedown)="connect()" class="button" value="Connection" style="text-align: center;" >Connection</div>
+        <div (mousedown)="AdminEntry()" class="button" value="Entrée admin" style="text-align: center;">Entrée admin</div>
     </div>
     
 </form>

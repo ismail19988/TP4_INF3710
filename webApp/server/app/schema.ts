@@ -4,12 +4,12 @@ DROP SCHEMA IF EXISTS netflixDB CASCADE;
 CREATE SCHEMA netflixDB;
 
 CREATE TABLE IF NOT EXISTS netflixDB.membre (
-	noMembre				INTEGER,
 	courriel				VARCHAR(30),
 	motDePasse				VARCHAR(100),
 	nom						VARCHAR(30),
 	adressePostale			VARCHAR(40),
-	PRIMARY KEY (noMembre)
+	CodePostal				VARCHAR(6),
+	PRIMARY KEY (courriel)
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.membreMensuel (

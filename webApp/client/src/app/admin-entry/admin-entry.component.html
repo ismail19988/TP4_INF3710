@@ -1,0 +1,18 @@
+<!--insipiration du code HTML formulaire de connexion prise ici: https://codepen.io/shaligramk/pen/sKCJI/-->
+<form>
+    <h4> Enregistrer utilisateur </h4>
+    <h5 #state>[ ]</h5>
+    <input #lName type="text" placeholder="Nom"/>
+    <input #fName type="" placeholder="Prénom"/>
+    <input #mail type="" placeholder="Courriel"/>
+    <input #password type="password" placeholder="Mot de passe"/>
+    <input #address type="text" placeholder="Adresse"/>
+    <input #postalCode type="text" placeholder="Code postal"/>
+    <div id='btnContainer'>
+        <div (mousedown)="register()" class="button" value="Connection" style="text-align: center;" >Enregistrer l'utilisateur</div>
+        <div (mousedown)="navigateConnectionPage()" class="button" value="Connection" style="text-align: center;" >Page de connexion</div>
+    </div>
+    
+</form>
+
+
