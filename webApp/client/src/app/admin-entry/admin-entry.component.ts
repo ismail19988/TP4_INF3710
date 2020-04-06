@@ -41,7 +41,7 @@ export class AdminEntryComponent implements OnInit {
     @ViewChild('aMember', { static: false })
     private aMember: ElementRef<HTMLInputElement>;
 
-    public membreVisionnement: boolean = true;
+    public membreMensuel: boolean = true;
 
     constructor(private communication: ServerCommunicationService, private router: Router) { }
 
@@ -53,13 +53,13 @@ export class AdminEntryComponent implements OnInit {
         const userData = {
             fName: this.fName.nativeElement.value,
             lName: this.lName.nativeElement.value,
-            username: this.mailRef.nativeElement.value,
+            mail: this.mailRef.nativeElement.value,
             password: this.passRef.nativeElement.value,
             adress: this.address.nativeElement.value,
             postalCode: this.postalCode.nativeElement.value,
             price: this.price.nativeElement.value,
             date: this.date.nativeElement.value,
-            vMember: this.membreVisionnement,
+            membreMensuel: this.membreMensuel,
         };
 
         this.communication.registerRequest(userData).subscribe(res => {
@@ -80,7 +80,7 @@ export class AdminEntryComponent implements OnInit {
     }
 
     public switchMember(vMember: boolean) {
-        this.membreVisionnement = vMember;
+        this.membreMensuel = vMember;
         if (vMember) {
             this.vMember.nativeElement.style.borderStyle = 'solid';
             this.vMember.nativeElement.style.borderColor = '#5cb85c';

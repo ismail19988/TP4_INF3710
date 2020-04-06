@@ -11,7 +11,7 @@ export class ServerCommunicationService {
 
     constructor(private http: HttpClient) {}
 
-    authentificationRequest(data: { username: string, password: string} ) {
+    authentificationRequest(data: { mail: string, password: string} ) {
         return this.http
             .post<{ title: string; body: string }>(this.BASE_URL + '/auth', data)
             .pipe(catchError(this.handleError<string>('Authentification error')));
@@ -20,15 +20,14 @@ export class ServerCommunicationService {
     registerRequest(userData: {
         fName: string,
         lName: string,
-        username: string,
+        mail: string,
         password: string,
         adress: string,
         postalCode: string,
         price: string,
         date: String,
-        vMember: boolean
+        membreMensuel: boolean
     }) {
-        console.log(userData);
         return this.http
             .post<{ title: string; body: string }>(this.BASE_URL + '/auth/reg', userData)
             .pipe(catchError(this.handleError<string>('Registering error')));

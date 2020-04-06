@@ -10,13 +10,13 @@
     <input #postalCode type="text" placeholder="Code postal"/>
 
     <div id='btnContainer'>
-        <div #vMember (mousedown)="switchMember(true);" class="button" style="text-align: center; border-style: solid; border-color: #5cb85c;" >Membre Visionnement</div>
-        <div #aMember (mousedown)="switchMember(false);" class="button" style="text-align: center;">Membre achat</div>
+        <div #vMember (mousedown)="switchMember(true);" class="button" style="text-align: center; border-style: solid; border-color: #5cb85c;" >Membre Mensuel</div>
+        <div #aMember (mousedown)="switchMember(false);" class="button" style="text-align: center;">Membre par vue</div>
     </div>
 
     <div>
-        <input #price type="text" placeholder="Prix abonnement" [disabled] = "!membreVisionnement"/>
-        <input #date type="text" placeholder="Date d'échéhance (YYYY-MM-DD)" [disabled] = "!membreVisionnement"/>
+        <input #price type="text" placeholder="Prix abonnement" [disabled] = "!membreMensuel"/>
+        <input #date type="text" placeholder="Date d'échéhance (YYYY-MM-DD)" [disabled] = "!membreMensuel"/>
     </div>
 
     <div id='btnContainer'>

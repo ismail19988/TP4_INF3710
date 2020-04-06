@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS netflixDB.membre (
 	motDePasse				VARCHAR(100),
 	nom						VARCHAR(30),
 	adressePostale			VARCHAR(40),
-	CodePostal				VARCHAR(6),
+	codePostal				VARCHAR(6),
 	PRIMARY KEY (courriel)
 );
 
@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS netflixDB.membreMensuel (
 	motDePasse				VARCHAR(100),
 	nom						VARCHAR(30),
 	adressePostale			VARCHAR(40),
+	codePostal				VARCHAR(6),
 	prix_abonnement			FlOAT,
 	date_échéhance			DATE,
 	PRIMARY KEY (courriel),
@@ -29,6 +30,7 @@ CREATE TABLE IF NOT EXISTS netflixDB.membreVisionnement (
 	motDePasse				VARCHAR(100),
 	nom						VARCHAR(30),
 	adressePostale			VARCHAR(40),
+	codePostal				VARCHAR(6),
 	nbFilms					INTEGER,
 	PRIMARY KEY (courriel),
 	FOREIGN KEY (courriel) REFERENCES netflixDB.membre(courriel)

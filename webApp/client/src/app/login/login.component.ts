@@ -24,11 +24,11 @@ export class LoginComponent implements OnInit {
 
     public async connect() {
         this.stateRef.nativeElement.innerHTML = '[En attente du serveur...]';
-        this.communication.authentificationRequest({ username: this.mailRef.nativeElement.value, password:this.passRef.nativeElement.value }).subscribe(res => {
+        this.communication.authentificationRequest({ mail: this.mailRef.nativeElement.value, password:this.passRef.nativeElement.value }).subscribe(res => {
                 let serverResponse =  res as {title: string, body: string};
                 let message  = "";
                 try {
-                    message+= serverResponse.body;
+                    message += serverResponse.body;
                 }
                 catch(err) {
                     message += "[Le serveur est déconnecté. Connexion Impossible]"
