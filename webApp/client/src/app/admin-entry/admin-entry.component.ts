@@ -43,7 +43,7 @@ export class AdminEntryComponent implements OnInit {
 
     public membreVisionnement: boolean = true;
 
-    constructor(private communication: ServerCommunicationService, private router: Router) {}
+    constructor(private communication: ServerCommunicationService, private router: Router) { }
 
     ngOnInit() {}
 

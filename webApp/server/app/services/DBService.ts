@@ -24,36 +24,39 @@ export class DatabaseService {
 
     }
 
-    public async checkUsername(username:string, password:string): Promise<Message> {
+    public async checkUsername(username: string, password: string): Promise<Message> {
         console.log(password);
-        this.pool.query("select * from netflixDB.membre where courriel = '1'").then((res) => {
-            console.error(res.rows.length);
+        
+        let request = { title: '', body: '' };
+
+        await this.pool.query("SELECT * FROM netflixDB.membre WHERE courriel = '" + username + "'").then(
+        (res) => {
             if(res.rowCount > 0 ){
-                console.error(res.rowCount);
-                return password === res.rows[0].motdepasse ?
-                    {
+                 password === res.rows[0].motdepasse ?
+                    request = {
                         title:'success',
                         body:'Connexion réussie. Bienvenue, '+ username + '!'
                     } : 
-                    {
+                    request = {
                         title:'fail',
                         body:'Connexion échouée. Courriel ou mot de passe incorrect.'
                     }
             }
             else {
-                return {
+                request =  {
                     title:'fail',
                     body:'Connexion échouée. Courriel ou mot de passe incorrect.'
                 }
             }
-        }).catch((err) => {
-            console.log('erreur!');
+        }).catch(
+        (err) => {
+            request = {
+                title: 'fail',
+                body: "Une erreur s'est produite " + err
+            };
         });
 
-        return {
-            title:'fail',
-            body:"Une erreur s'est produite"
-        }
+        return request;
     }
 
     createSchema(){
