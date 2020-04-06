@@ -22,8 +22,9 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {}
 
-    public async connect() {
+    public connect() {
         this.stateRef.nativeElement.innerHTML = '[En attente du serveur...]';
+
         this.communication.authentificationRequest({ mail: this.mailRef.nativeElement.value, password:this.passRef.nativeElement.value }).subscribe(res => {
                 let serverResponse =  res as {title: string, body: string};
                 let message  = "";

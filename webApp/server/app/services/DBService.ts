@@ -88,7 +88,7 @@ export class DatabaseService {
             userData.membreMensuel ?
             await this.pool.query(`
             INSERT INTO netflixDB.membre VALUES('${ userData.mail }', '${ userData.password }', '${ userData.fName } ${ userData.lName }', '${ userData.adress }', '${ userData.postalCode }');
-            INSERT INTO netflixDB.membreMensuel VALUES('${ userData.mail }', '${ userData.password }', '${ userData.fName } ${ userData.lName }', '${ userData.adress }', '${ userData.postalCode }');
+            INSERT INTO netflixDB.membreMensuel VALUES('${ userData.mail }', '${ userData.password }', '${ userData.fName } ${ userData.lName }', '${ userData.adress }', '${ userData.postalCode }', '${ userData.price }', '${ userData.date }');
             `).then(()=>{
                 answer =  {
                     title: 'Succes',
