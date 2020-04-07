@@ -47,42 +47,12 @@
                 <div class="clear"></div>
             </div>
             <div class="content-grids">
-                <div class="content-grid" style="margin: 5px;">
-                    <p>titre</p>
-                    <p>genre</p>
-                    <p>date de production</p>
-                    <p>duree</p>
+                <div class="content-grid" *ngFor="let movie of movies" style="margin: 5px;">
+                    <p>Titre: {{ movie.getTitle() }}</p>
+                    <p>Genre: {{ movie.getType() }}</p>
+                    <p>Année de prod : {{ movie.getProductionDate() }}</p>
+                    <p>Durée: {{ movie.getLenght() }} minutes</p>
                     <a class="button">Regarder le film</a>
-                </div>
-                <div class="content-grid" style="margin: 5px;">
-                    <p>titre</p>
-                    <p>genre</p>
-                    <p>date de production</p>
-                    <p>duree</p>
-                    <a class="button">Regarder le film</a>
-                </div>
-                <div class="content-grid" style="margin: 5px;">
-                    <p>titre</p>
-                    <p>genre</p>
-                    <p>date de production</p>
-                    <p>duree</p>
-                    <a class="button">Regarder le film</a>
-                </div>
-                <div class="content-grid" style="margin: 5px;">
-                    <p>titre</p>
-                    <p>genre</p>
-                    <p>date de production</p>
-                    <p>duree</p>
-                    <a class="button">Regarder le film</a>
-                </div>
-                <div class="content-grid" style="margin: 5px;">
-                    <p>titre</p>
-                    <p>genre</p>
-                    <p>date de production</p>
-                    <p>duree</p>
-                    <a class="button">Regarder le film</a>
-                </div>
-                <div class="clear"></div>
             </div>
         </div>
     </div>
