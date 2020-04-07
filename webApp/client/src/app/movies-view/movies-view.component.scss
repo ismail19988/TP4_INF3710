@@ -1,0 +1,170 @@
+* {
+    display: block;
+}
+
+ol,
+ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+/* start editing from here */
+a {
+    text-decoration: none;
+}
+.clear {
+    clear: both;
+}
+img {
+    max-width: 100%;
+}
+/*end reset*/
+
+/*-----start-wrap----*/
+.wrap {
+    width: 80%;
+    margin: 0 auto;
+}
+/*---start-header----*/
+.header {
+    padding: 20px;
+}
+.logo {
+    padding-top: 8px;
+}
+
+.top-menu {
+    float: right;
+    width: 70%;
+    padding-top: 6px;
+}
+
+.barre_logo_recherche h1 {
+    color: #fff;
+    float: left;
+    width: 20%;
+}
+
+.recherche {
+    width: 30%;
+    padding-top: 28px;
+    float: right;
+}
+
+input[type='text'] {
+    width: 60%;
+    padding: 10px;
+    float: left;
+    border: 1px solid rgba(85, 85, 85, 0.15);
+    border: none;
+    outline: none;
+    font-family: 'gandhi_sansregular';
+    color: #888;
+}
+
+input[type='submit'] {
+    padding: 10px;
+    width: 105px;
+    cursor: pointer;
+    border: none;
+    color: #000;
+    outline: none;
+    font-family: 'gandhi_sansregular';
+    text-transform: uppercase;
+}
+
+/*---start-main-content----*/
+.Barre_laterale {
+    width: 20%;
+    float: left;
+}
+.sidebar-box h3 {
+    font-family: 'gandhi_sansregular';
+    color: #888;
+    text-transform: uppercase;
+    padding: 10px 10px 10px 0;
+    display: block;
+    border: 1px solid #f1f0f6;
+    font-size: 0.875em;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    line-height: 1.5em;
+}
+.sidebar-box h2 {
+    font-family: 'gandhi_sansregular';
+    color: #888;
+    text-transform: uppercase;
+    padding: 10px 10px 10px 0;
+    display: block;
+    font-size: 1em;
+}
+.sidebar-box ul li {
+    display: block;
+    padding: 5px 0;
+    font-family: 'gandhi_sansregular';
+    color: #888;
+    cursor: pointer;
+}
+
+.type-videos ul li a {
+    color: #888;
+    font-family: 'gandhi_sansregular';
+    font-size: 0.875em;
+    line-height: 1.5em;
+    padding: 18px 10px 11px 10px;
+    display: block;
+    background: #f1f0f6;
+    margin-bottom: 1px;
+    text-transform: uppercase;
+}
+
+.type-videos h3 {
+    font-family: 'gandhi_sansregular';
+    color: #888;
+    text-transform: uppercase;
+    padding: 10px;
+    display: block;
+    border: 1px solid #f1f0f6;
+    font-size: 1em;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+/*-----right-content-----*/
+.right-content {
+    padding: 0 18px;
+    width: 77%;
+    float: right;
+    margin-top: 15px;
+}
+
+.content-grid {
+    width: 23%;
+    float: left;
+    text-align: center;
+    border: 1px solid rgba(235, 235, 235, 0.53);
+}
+
+.button {
+    background: #000;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    color: #fff;
+    outline: none;
+    font-family: 'gandhi_sansregular';
+    margin: 10px 0 0 0;
+    font-size: 0.875em;
+}
+
+.right-content-heading {
+    border-bottom: 1px solid #f1f0f6;
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-family: 'gandhi_sansregular';
+    color: #888;
+    display: block;
+}

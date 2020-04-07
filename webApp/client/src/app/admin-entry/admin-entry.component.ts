@@ -72,12 +72,15 @@ export class AdminEntryComponent implements OnInit {
             }
 
             this.stateRef.nativeElement.innerHTML = message;
+
+
         });
     }
 
     navigateConnectionPage() {
         this.router.navigate(['/']);
     }
+    
 
     public switchMember(vMember: boolean) {
         this.membreMensuel = vMember;
