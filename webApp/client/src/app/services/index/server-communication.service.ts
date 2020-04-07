@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Movie } from './Movie';
 
 @Injectable({
     providedIn: 'root',
@@ -32,6 +33,20 @@ export class ServerCommunicationService {
             .post<{ title: string; body: string }>(this.BASE_URL + '/auth/reg', userData)
             .pipe(catchError(this.handleError<string>('Registering error')));
     }
+
+    getMovie(title:string) {
+        return this.http
+            .post<{ title: string; body: Movie }>(this.BASE_URL + '/movie', title)
+            .pipe(catchError(this.handleError<string>('Authentification error')));
+    }
+
+    getAllMovies() {
+        return this.http
+            .get<{ title: string; movies: Movie[] }>(this.BASE_URL + '/movie/all')
+            .pipe(catchError(this.handleError<string>('Authentification error')));
+    }
+
+
 
     private handleError<T>(request: string, result?: T): (error: Error) => Observable<T> {
         return (error: Error): Observable<T> => {

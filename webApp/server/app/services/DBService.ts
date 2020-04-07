@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import { Message } from '../../../common/communication/message';
 import { schema } from '../schema';
 import { data } from '../data';
+import { Movie } from './Movie';
 
 export class DatabaseService {
 
@@ -121,6 +122,21 @@ export class DatabaseService {
 
         return answer;
 
+    }
+
+
+    public async getAllMovies(): Promise<Movie[]>{
+
+        let movies = new Array<Movie>();
+        await this.pool.query('SELECT * FROM netflixDB.film').then((res)=>{
+            for(let result of res.rows){
+                movies.push(new Movie(result.titre, result.genre, result.dateProduction, result.durée));
+            }
+        }).catch((err)=>{
+            console.log('une erreur sest produite', err);
+        })
+
+        return movies;
     }
 
     createSchema() {

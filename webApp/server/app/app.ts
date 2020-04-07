@@ -6,6 +6,7 @@ import { injectable } from 'inversify';
 import * as logger from 'morgan';
 import { AuthController } from './controllers/authentification.controller';
 import { DatabaseService } from './services/DBService';
+import { MovieController } from './controllers/movie.controller';
 
 @injectable()
 export class Application {
@@ -13,6 +14,7 @@ export class Application {
     app: express.Application;
     session = require('express-session');
     private authController: AuthController;
+    private movieController: MovieController;
 
     constructor(
     ) {
@@ -21,7 +23,7 @@ export class Application {
 
         let DB: DatabaseService =  new DatabaseService();
         this.authController =  new AuthController(DB);
-
+        this.movieController =  new MovieController(DB);
         this.config();
         this.bindRoutes();
     }
@@ -43,7 +45,7 @@ export class Application {
     bindRoutes(): void {
         // Notre application utilise le routeur de notre API `Index`
         this.app.use('/auth', this.authController.router);
-
+        this.app.use('/movie', this.movieController.router);
         this.errorHandling();
     }
 
