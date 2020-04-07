@@ -5,6 +5,8 @@ import { schema } from '../schema';
 import { data } from '../data';
 
 export class DatabaseService {
+
+    //A configurer
     public connectionConfig: pg.ConnectionConfig = {
         user: 'postgres',
         database: 'netflix',
@@ -18,7 +20,7 @@ export class DatabaseService {
 
     public constructor() {
         this.pool.connect();
-        this.createSchema();
+        //this.createSchema();
     }
 
     public async checkUsername(mail: string, password: string): Promise<Message> {
@@ -31,23 +33,23 @@ export class DatabaseService {
                 if (res.rowCount > 0) {
                     password === res.rows[0].motdepasse
                         ? (answer = {
-                              title: 'success',
-                              body: 'Connexion réussie. Bienvenue, ' + mail + '!',
+                              title: 'Success',
+                              body: 'Connexion réussie. Bienvenue, ' + res.rows[0].nom + '!',
                           })
                         : (answer = {
-                              title: 'fail',
+                              title: 'Fail',
                               body: 'Connexion échouée. Courriel ou mot de passe incorrect.',
                           });
                 } else {
                     answer = {
-                        title: 'fail',
+                        title: 'Fail',
                         body: 'Connexion échouée. Courriel ou mot de passe incorrect.',
                     };
                 }
             })
             .catch(err => {
                 answer = {
-                    title: 'fail',
+                    title: 'Fail',
                     body: "Une erreur s'est produite " + err,
                 };
             });
@@ -79,7 +81,7 @@ export class DatabaseService {
 
         if(exist) {
             answer =  {
-                title: 'fail',
+                title: 'Fail',
                 body: 'Enregistrement impossible. Un utilisateur avec ce courriel exist déjà.'
             }
 
@@ -91,12 +93,12 @@ export class DatabaseService {
             INSERT INTO netflixDB.membreMensuel VALUES('${ userData.mail }', '${ userData.password }', '${ userData.fName } ${ userData.lName }', '${ userData.adress }', '${ userData.postalCode }', '${ userData.price }', '${ userData.date }');
             `).then(()=>{
                 answer =  {
-                    title: 'Succes',
+                    title: 'Success',
                     body: 'Enregistrement Réussi.'
                 }
             }).catch((err) => {
                 answer = {
-                    title: 'fail',
+                    title: 'Fail',
                     body: "Une erreur s'est produite. " + err,
                 };
             }) :
@@ -105,12 +107,12 @@ export class DatabaseService {
             INSERT INTO netflixDB.membreVisionnement VALUES('${ userData.mail }', '${ userData.password }', '${ userData.fName } ${ userData.lName }', '${ userData.adress }', '${ userData.postalCode }', '0');;
             `).then(()=>{
                 answer =  {
-                    title: 'Succes',
+                    title: 'Success',
                     body: 'Enregistrement Réussi.'
                 }
             }).catch((err) => {
                 answer = {
-                    title: 'fail',
+                    title: 'Fail',
                     body: "Une erreur s'est produite " + err,
                 };
             });
@@ -127,7 +129,12 @@ export class DatabaseService {
     }
 
     populateDB() {
-        this.pool.query(data);
+        console.log('populating')
+        this.pool.query(data).then((res)=>{
+        console.log(res);
+        }).catch((err)=>{
+            console.log(err)
+        });
     }
 
     //queries here

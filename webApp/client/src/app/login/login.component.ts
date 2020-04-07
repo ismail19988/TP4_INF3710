@@ -22,22 +22,35 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {}
 
-    public connect() {
-        this.stateRef.nativeElement.innerHTML = '[En attente du serveur...]';
+    public async connect() {
+        await this.getServerValidation().then((res) => {
+            if(res)
+                setTimeout(()=>{ this.router.navigate(['/movies']); }, 2000);
+        }).catch((err)=>{
+            console.log(err);
+        });
+    }
 
-        this.communication.authentificationRequest({ mail: this.mailRef.nativeElement.value, password:this.passRef.nativeElement.value }).subscribe(res => {
-                let serverResponse =  res as {title: string, body: string};
+    async getServerValidation(): Promise<boolean> {
+        this.stateRef.nativeElement.innerHTML = '[En attente du serveur...]';
+        return new Promise((resolve, reject) => {
+            this.communication.authentificationRequest({ mail: this.mailRef.nativeElement.value, password:this.passRef.nativeElement.value }).subscribe(res => {
+                let serverResponse =  res as { title: string, body: string };
                 let message  = "";
                 try {
                     message += serverResponse.body;
+                    resolve(serverResponse.title ==='Success');
                 }
                 catch(err) {
                     message += "[Le serveur est déconnecté. Connexion Impossible]"
+                    reject(err);
                 }
-
                 this.stateRef.nativeElement.innerHTML = message;
             });
+
+        });
     }
+
 
     public AdminEntry(){
         this.router.navigate(['/admin']);
