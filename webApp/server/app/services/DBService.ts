@@ -182,7 +182,19 @@ export class DatabaseService {
 
         if(answer.title !== 'Fail'){
             if(rowCount > 0) {
-                console.log('on update')
+                console.log('UPDATING...');
+                await this.pool.query(`UPDATE netflixDB.visionnement SET dureeVisionnement = ${min} WHERE (courriel = '${courriel}' AND noFilm = ${noFilm})`).then((res)=>{
+                    answer = {
+                        title: 'Success', 
+                        body: 'insertion a la DB reussie'
+                    }
+                    }).catch((err)=>{
+                        console.log('une erreur sest produite', err);
+                        answer = {
+                            title: 'Fail',
+                            body: "Une erreur s'est produite " + err,
+                        };
+                    })
             } else {
                 console.log('INSERTING...');
                 await this.pool.query(`INSERT INTO netflixDB.visionnement VALUES ('${courriel}', ${noFilm}, '${today}', ${min})`).then((res)=>{
@@ -196,7 +208,7 @@ export class DatabaseService {
                         title: 'Fail',
                         body: "Une erreur s'est produite " + err,
                     };
-                })
+                });
             }
             await this.pool.query(`SELECT dureeVisionnement FROM netflixDB.visionnement WHERE (noFilm = ${noFilm} AND courriel = '${courriel}')`).then((res)=>{
                 console.log(res.rows[0]);
@@ -221,6 +233,7 @@ export class DatabaseService {
         await this.pool.query(schema).catch((err)=>{
             console.log(err)
         });
+        
         await this.pool.query(data).catch((err)=>{
             console.log(err)
         });
