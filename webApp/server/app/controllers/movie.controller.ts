@@ -31,7 +31,15 @@ export class MovieController {
             }).catch(()=> {
                 response.json(0);
             });
-        })
+        });
+
+        this.router.post('/savetime', (req, response) => {
+            console.log(req.body);
+            this.DB_service.saveMovieTime(req.body.noFilm, req.body.courriel, req.body.min).then(()=>{
+            }).catch(()=> {
+                response.json(0);
+            });
+        });
     }
 
 

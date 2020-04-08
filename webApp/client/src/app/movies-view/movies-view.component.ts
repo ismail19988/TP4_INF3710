@@ -75,7 +75,8 @@ export class MoviesViewComponent implements AfterViewInit {
 
   async onMovieChange(elem: HTMLElement) {
     this.playing = false;
-    //let oldMovie = this.movie.noMovie;
+    let oldMovie: number = 0;
+    if(this.movie != undefined) oldMovie = this.movie.noMovie;
     let noMovie:number = +<string>elem.getAttribute('id');
     for(let movie of this.movies){
       if(movie.noMovie == noMovie){
@@ -84,11 +85,13 @@ export class MoviesViewComponent implements AfterViewInit {
     }
 
     if(this.StartedWatching) {
-      // save au serveur le timer
+      this.communication.saveMovieTime(oldMovie, this.session.mail, this.timer.getSec()).subscribe((res) => {
+        console.log('Temps sauvegardé');
+      });
       this.timer.resetTimer();
       this.videoPlayer.nativeElement.style.backgroundImage = 'url(https://www.svgrepo.com/show/13672/play-button.svg)';
     }
-    await this.getCanContinue(noMovie).then((res)=>{
+    await this.getCanContinue(noMovie).then((res)=> {
       this.canContinue = (res !== 0) && res != undefined;
       this.whereToContinue = res;
       // set un timeout pour retirer la div qui demande de continuer apres un certains temps comme 10-15 secondes
@@ -96,7 +99,6 @@ export class MoviesViewComponent implements AfterViewInit {
       console.log(err)
     });
 
-    console.log('fini');
     this.timer = new Timer(0, this.movie.lenghtMins);
     // get du serveur les infos du films pour proposer de continuer ou il etait et dire ecq tu veux?
     this.StartedWatching = false;
@@ -106,7 +108,6 @@ export class MoviesViewComponent implements AfterViewInit {
   async getCanContinue(noMovie:number):Promise<number>{
     return await new Promise((response, request) => {
       this.communication.getCanContinue(noMovie, this.session.mail).subscribe((res) => {
-        console.log(res);
         try {
           response(res as number)
         } catch(err) {

@@ -148,7 +148,6 @@ export class DatabaseService {
 
     public async getContinueMovie(noFilm: number, courriel: string): Promise<number> {
         let number = 0;
-        console.log(noFilm, courriel);
         await this.pool.query(`SELECT dureeVisionnement FROM netflixDB.visionnement WHERE (noFilm = ${noFilm} AND courriel = '${courriel}')`).then((res)=>{
             console.log(res.rowCount);
             if(res.rowCount > 0){
@@ -157,9 +156,63 @@ export class DatabaseService {
         }).catch((err)=>{
             console.log('une erreur sest produite', err);
         })
-        console.log(number);
         return number;
     }
+
+    public async saveMovieTime(noFilm: number, courriel: string, min:number): Promise<Message> {
+        let answer = { title: '', body: '' };
+        let rowCount = 0;
+
+        await this.pool.query(`SELECT dureeVisionnement FROM netflixDB.visionnement WHERE (noFilm = ${noFilm} AND courriel = '${courriel}')`).then((res)=>{
+            rowCount = res.rowCount;
+        }).catch((err)=>{
+            console.log('une erreur sest produite', err);
+            answer = {
+                title: 'Fail',
+                body: "Une erreur s'est produite " + err,
+            };
+        })
+
+        let date = new Date();
+        let dd = String(date.getDate()).padStart(2, '0');
+        let mm = String(date.getMonth() + 1).padStart(2, '0');
+        let yyyy = date.getFullYear();
+
+        let today = yyyy + "-" + mm + "-" + dd;
+
+        if(answer.title !== 'Fail'){
+            if(rowCount > 0) {
+                console.log('on update')
+            } else {
+                console.log('INSERTING...');
+                await this.pool.query(`INSERT INTO netflixDB.visionnement VALUES ('${courriel}', ${noFilm}, '${today}', ${min})`).then((res)=>{
+                answer = {
+                    title: 'Success', 
+                    body: 'insertion a la DB reussie'
+                }
+                }).catch((err)=>{
+                    console.log('une erreur sest produite', err);
+                    answer = {
+                        title: 'Fail',
+                        body: "Une erreur s'est produite " + err,
+                    };
+                })
+            }
+            await this.pool.query(`SELECT dureeVisionnement FROM netflixDB.visionnement WHERE (noFilm = ${noFilm} AND courriel = '${courriel}')`).then((res)=>{
+                console.log(res.rows[0]);
+            }).catch((err)=>{
+                console.log('une erreur sest produite', err);
+                answer = {
+                    title: 'Fail',
+                    body: "Une erreur s'est produite " + err,
+                };
+            })
+        }
+
+        console.log(answer);
+        return answer;
+    }
+    
 
 
 

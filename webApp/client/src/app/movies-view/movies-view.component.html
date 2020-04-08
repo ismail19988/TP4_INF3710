@@ -29,7 +29,7 @@
         <div class="films">
 
             <div style = "float: left;" *ngIf="movie != undefined; else noMovie" >
-                <h3>Lecteur video</h3>
+                <h3>Lecteur video: {{ movie.title }}</h3>
                 <div style="width: 100%;" *ngIf = "canContinue">
                     <h3 style="text-align: center; padding-left: 10px; text-align: center;">Voulez-vous continuer le film a partir de ou vous etiez?</h3>
                     <div>
@@ -47,7 +47,7 @@
             </div>
 
             <ng-template #noMovie>
-                <div>
+                <div style = "float: left;">
                     <h3> Aucun film n'est séléctionné ! </h3>
                 </div>
             </ng-template>

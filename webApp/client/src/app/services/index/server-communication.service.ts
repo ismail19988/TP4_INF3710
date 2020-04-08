@@ -52,7 +52,7 @@ export class ServerCommunicationService {
             .pipe(catchError(this.handleError<string>('Authentification error')));
     }
 
-    saveTimer(noMovie: number, mail: string, min: number) {
+    saveMovieTime(noMovie: number, mail: string, min: number) {
         return this.http
             .post<{ title: string; movies: Movie[] }>(this.BASE_URL + '/movie/savetime', {noFilm: noMovie, courriel: mail, min: min })
             .pipe(catchError(this.handleError<string>('Authentification error')));
