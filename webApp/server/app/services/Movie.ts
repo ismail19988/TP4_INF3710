@@ -1,5 +1,5 @@
 export class Movie {
-    constructor(private title: string, private type: string, private productionDate: string, private lenghtMins: number) {}
+    constructor(private noMovie:number, private title: string, private type: string, private productionDate: string, private lenghtMins: number) {}
 
     public getTitle() {
         return this.title;
@@ -15,5 +15,9 @@ export class Movie {
 
     public getLenght() {
         return this.lenghtMins;
+    }
+
+    public getNoMovie(){
+        return this.noMovie;
     }
 }

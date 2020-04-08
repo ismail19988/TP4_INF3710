@@ -20,11 +20,18 @@ export class DatabaseService {
     private pool: pg.Pool = new pg.Pool(this.connectionConfig);
 
     public constructor() {
-        this.pool.connect();
+        this.initalise();
+    }
+
+    private async initalise() {
+        await this.pool.connect().catch((err)=>{
+            console.log(err)
+        });
         this.createSchema();
     }
 
     public async checkUsername(mail: string, password: string): Promise<Message> {
+
         console.log(mail, password)
         let answer = { title: '', body: '' };
 
@@ -130,7 +137,7 @@ export class DatabaseService {
         let movies = new Array<Movie>();
         await this.pool.query('SELECT * FROM netflixDB.film').then((res)=>{
             for(let result of res.rows){
-                movies.push(new Movie(result.titre, result.genre, result.dateproduction, result.durée));
+                movies.push(new Movie(result.nofilm, result.titre, result.genre, (result.dateproduction), result.durée));
             }
         }).catch((err)=>{
             console.log('une erreur sest produite', err);
@@ -139,18 +146,14 @@ export class DatabaseService {
         return movies;
     }
 
-    createSchema() {
-        this.pool.query(schema);
-        this.populateDB();
-    }
-
-    populateDB() {
-        console.log('populating')
-        this.pool.query(data).then((res)=>{
-        }).catch((err)=>{
+    async createSchema() {
+        await this.pool.query(schema).catch((err)=>{
+            console.log(err)
+        });
+        await this.pool.query(data).catch((err)=>{
             console.log(err)
         });
     }
 
-    //queries here
+
 }
