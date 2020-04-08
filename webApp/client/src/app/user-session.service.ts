@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class UserSessionService {
 
-  mail: string = "";
+  mail: string = "1";
   isconnected: boolean = false;
 
   constructor() { }

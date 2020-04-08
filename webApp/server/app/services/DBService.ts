@@ -6,7 +6,7 @@ import { data } from '../data';
 import { Movie } from './Movie';
 
 export class DatabaseService {
-
+    
     //A configurer
     public connectionConfig: pg.ConnectionConfig = {
         user: 'postgres',
@@ -133,7 +133,6 @@ export class DatabaseService {
 
 
     public async getAllMovies(): Promise<Movie[]>{
-
         let movies = new Array<Movie>();
         await this.pool.query('SELECT * FROM netflixDB.film').then((res)=>{
             for(let result of res.rows){
@@ -145,6 +144,24 @@ export class DatabaseService {
         })
         return movies;
     }
+
+
+    public async getContinueMovie(noFilm: number, courriel: string): Promise<number> {
+        let number = 0;
+
+        await this.pool.query(`SELECT dureeVisionnement FROM netflixDB.visionnement WHERE (noFilm = ${noFilm} AND courriel = '${courriel}')`).then((res)=>{
+            if(res.rowCount > 0){
+                number = res.rows[0].dureevisionnement;
+            }
+        }).catch((err)=>{
+            console.log('une erreur sest produite', err);
+        })
+        console.log(number);
+        return number;
+    }
+
+
+
 
     async createSchema() {
         await this.pool.query(schema).catch((err)=>{

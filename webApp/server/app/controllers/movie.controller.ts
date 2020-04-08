@@ -18,15 +18,22 @@ export class MovieController {
     }
 
     bindAllMoviesRoute(){
+
         this.router.get('/all', (req, response) => {
             this.DB_service.getAllMovies().then((res)=>{
-                response.json({title:'les films!', movies: res});
+                response.json({ title: 'les films!', movies: res });
             });
         });
 
         this.router.post('/continue', (req, response) => {
-                response.json(5);
-        });
+            console.log(req.body);
+            this.DB_service.getContinueMovie(req.body.noFilm, req.body.courriel).then((res)=>{
+                console.log(res);
+                response.json(res);
+            }).catch(()=>{
+                response.json(0);
+            });
+        })
     }
 
 

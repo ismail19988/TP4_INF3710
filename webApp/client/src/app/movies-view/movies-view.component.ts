@@ -3,7 +3,6 @@ import { ServerCommunicationService } from '../services/index/server-communicati
 import { Movie } from '../services/index/Movie';
 import { Timer } from '../services/index/Timer';
 import { UserSessionService } from '../user-session.service';
-import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 @Component({
   selector: 'app-movies-view',
@@ -98,6 +97,7 @@ export class MoviesViewComponent implements AfterViewInit {
       console.log(err)
     });
 
+    console.log('fini');
     this.timer = new Timer(0, this.movie.lenghtMins);
     // get du serveur les infos du films pour proposer de continuer ou il etait et dire ecq tu veux?
     this.StartedWatching = false;
@@ -108,7 +108,6 @@ export class MoviesViewComponent implements AfterViewInit {
     return await new Promise((response, request) => {
       this.communication.getCanContinue(noMovie, this.session.mail).subscribe((res) => {
         console.log(res);
-
         try {
           response(res as number)
         } catch(err) {
@@ -118,7 +117,7 @@ export class MoviesViewComponent implements AfterViewInit {
     })
   }
 
-  continue(doContinue:boolean){
+  continue(doContinue: boolean){
     if(doContinue) this.timer.setMin(this.whereToContinue);
     this.canContinue = false;
   }

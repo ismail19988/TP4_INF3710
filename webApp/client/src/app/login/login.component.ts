@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ServerCommunicationService } from '../services/index/server-communication.service';
 import { Router } from '@angular/router';
+import { UserSessionService } from '../user-session.service';
 
 @Component({
     selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
     public stateRef: ElementRef<HTMLHeadElement>;
     
 
-    constructor(private communication: ServerCommunicationService, private router: Router) {}
+    constructor(private communication: ServerCommunicationService, private router: Router, private userSession:UserSessionService) {}
 
     ngOnInit() {}
 
@@ -40,6 +41,8 @@ export class LoginComponent implements OnInit {
                 try {
                     message += serverResponse.body;
                     resolve(serverResponse.title ==='Success');
+                    this.userSession.mail = this.mailRef.nativeElement.value;
+                    this.userSession.isconnected = true;
                 }
                 catch(err) {
                     message += "[Le serveur est déconnecté. Connexion Impossible]"

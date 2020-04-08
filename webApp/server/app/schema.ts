@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS netflixDB.visionnement (
 	courriel				VARCHAR(30),
 	noFilm					INTEGER,
 	dateVisionnement		DATE,
-	duréeVisionnement		INTEGER,
+	dureeVisionnement		INTEGER,
 	PRIMARY KEY (noFilm, courriel),
 	FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm),
 	FOREIGN KEY (courriel) REFERENCES netflixDB.membre(courriel)
