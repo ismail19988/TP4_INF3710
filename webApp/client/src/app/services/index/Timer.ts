@@ -41,4 +41,9 @@ export class Timer {
         this.min = 0;
         this.sec = 0;
     }
+
+    setMin(min: number){
+        this.min = min;
+        this.sec = 0;
+    }
 }

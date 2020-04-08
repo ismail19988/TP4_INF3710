@@ -2,6 +2,8 @@ import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { ServerCommunicationService } from '../services/index/server-communication.service';
 import { Movie } from '../services/index/Movie';
 import { Timer } from '../services/index/Timer';
+import { UserSessionService } from '../user-session.service';
+import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 @Component({
   selector: 'app-movies-view',
@@ -15,11 +17,13 @@ export class MoviesViewComponent implements AfterViewInit {
   private movies: Array<Movie> =  new Array<Movie>();
   private StartedWatching: boolean = false;
   private playing: boolean = false;
-  private canContinue:boolean = false;
+  public canContinue:boolean = false;
+  public whereToContinue:number = 0;
   @ViewChild('videoPlayer', { static: false })
   public videoPlayer: ElementRef<HTMLDivElement>;
 
-  constructor(private communication: ServerCommunicationService) {
+  constructor(private communication: ServerCommunicationService, private session:UserSessionService) {
+
   }
 
 
@@ -70,25 +74,53 @@ export class MoviesViewComponent implements AfterViewInit {
     }
   }
 
-  onMovieChange(elem: HTMLElement) {
+  async onMovieChange(elem: HTMLElement) {
+    this.playing = false;
+    //let oldMovie = this.movie.noMovie;
+    let noMovie:number = 0;
     for(let movie of this.movies){
       if(movie.title == elem.innerHTML){
         this.movie = movie;
+        noMovie = movie.noMovie;
       }
     }
 
     if(this.StartedWatching) {
       // save au serveur le timer
       this.timer.resetTimer();
-    } else {
-      this.timer = new Timer(0, this.movie.lenghtMins);
-      // get du serveur les infos du films pour proposer de continuer ou il etait et dire ecq tu veux?
+      this.videoPlayer.nativeElement.style.backgroundImage = 'url(https://www.svgrepo.com/show/13672/play-button.svg)';
     }
+    await this.getCanContinue(noMovie).then((res)=>{
+      this.canContinue = (res !== 0) && res != undefined;
+      this.whereToContinue = res;
+      // set un timeout pour retirer la div qui demande de continuer apres un certains temps comme 10-15 secondes
+    }).catch((err)=>{
+      console.log(err)
+    });
+
+    this.timer = new Timer(0, this.movie.lenghtMins);
+    // get du serveur les infos du films pour proposer de continuer ou il etait et dire ecq tu veux?
     this.StartedWatching = false;
 
   }
 
+  async getCanContinue(noMovie:number):Promise<number>{
+    return await new Promise((response, request) => {
+      this.communication.getCanContinue(noMovie, this.session.mail).subscribe((res) => {
+        console.log(res);
 
+        try {
+          response(res as number)
+        } catch(err) {
+          request(err);
+        }
+      });
+    })
+  }
 
+  continue(doContinue:boolean){
+    if(doContinue) this.timer.setMin(this.whereToContinue);
+    this.canContinue = false;
+  }
 
 }

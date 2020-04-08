@@ -33,8 +33,8 @@
                 <div style="width: 100%;" *ngIf = "canContinue">
                     <h3 style="text-align: center; padding-left: 10px; text-align: center;">Voulez-vous continuer le film a partir de ou vous etiez?</h3>
                     <div>
-                        <div class = "button" style="width: 40%; float: left; text-align: center;">oui</div>
-                        <div class = "button" style="width: 40%; float: right; text-align: center;">non</div>
+                        <div (click) = "continue(true)" class = "button" style="width: 40%; float: left; text-align: center;">oui</div>
+                        <div (click) = "continue(false)" class = "button" style="width: 40%; float: right; text-align: center;">non</div>
                     </div>
                 </div>
                 <div class="clear"></div>

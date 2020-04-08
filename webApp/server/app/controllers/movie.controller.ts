@@ -23,6 +23,10 @@ export class MovieController {
                 response.json({title:'les films!', movies: res});
             });
         });
+
+        this.router.post('/continue', (req, response) => {
+                response.json(5);
+        });
     }
 
 

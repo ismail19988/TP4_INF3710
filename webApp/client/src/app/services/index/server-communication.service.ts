@@ -46,7 +46,17 @@ export class ServerCommunicationService {
             .pipe(catchError(this.handleError<string>('Authentification error')));
     }
 
+    getCanContinue(noMovie: number, mail: string) {
+        return this.http
+            .post<number>(this.BASE_URL + '/movie/continue', {noFilm: noMovie, courriel:mail })
+            .pipe(catchError(this.handleError<string>('Authentification error')));
+    }
 
+    saveTimer(noMovie: number, mail: string, min: number) {
+        return this.http
+            .post<{ title: string; movies: Movie[] }>(this.BASE_URL + '/movie/savetime', {noFilm: noMovie, courriel: mail, min: min })
+            .pipe(catchError(this.handleError<string>('Authentification error')));
+    }
 
     private handleError<T>(request: string, result?: T): (error: Error) => Observable<T> {
         return (error: Error): Observable<T> => {
