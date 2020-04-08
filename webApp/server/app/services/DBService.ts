@@ -148,8 +148,9 @@ export class DatabaseService {
 
     public async getContinueMovie(noFilm: number, courriel: string): Promise<number> {
         let number = 0;
-
+        console.log(noFilm, courriel);
         await this.pool.query(`SELECT dureeVisionnement FROM netflixDB.visionnement WHERE (noFilm = ${noFilm} AND courriel = '${courriel}')`).then((res)=>{
+            console.log(res.rowCount);
             if(res.rowCount > 0){
                 number = res.rows[0].dureevisionnement;
             }

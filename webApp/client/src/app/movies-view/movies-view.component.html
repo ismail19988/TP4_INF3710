@@ -21,7 +21,7 @@
                 <div class="categories" style="padding-bottom:100%">
                     <h3 style="text-align:center;">Liste de films</h3>
                     <ul>
-                        <li (click)= "onMovieChange($event.target)"*ngFor="let movie of movies"><a class="button">{{ movie.title }}</a></li>
+                        <li *ngFor="let movie of movies"><a (click)= "onMovieChange($event.target)" id = "{{ movie.noMovie }}" class="button">{{ movie.title }}</a></li>
                     </ul>
                 </div>
             </div>

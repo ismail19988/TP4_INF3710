@@ -26,11 +26,9 @@ export class MovieController {
         });
 
         this.router.post('/continue', (req, response) => {
-            console.log(req.body);
             this.DB_service.getContinueMovie(req.body.noFilm, req.body.courriel).then((res)=>{
-                console.log(res);
                 response.json(res);
-            }).catch(()=>{
+            }).catch(()=> {
                 response.json(0);
             });
         })

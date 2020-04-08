@@ -76,11 +76,10 @@ export class MoviesViewComponent implements AfterViewInit {
   async onMovieChange(elem: HTMLElement) {
     this.playing = false;
     //let oldMovie = this.movie.noMovie;
-    let noMovie:number = 0;
+    let noMovie:number = +<string>elem.getAttribute('id');
     for(let movie of this.movies){
-      if(movie.title == elem.innerHTML){
+      if(movie.noMovie == noMovie){
         this.movie = movie;
-        noMovie = movie.noMovie;
       }
     }
 
