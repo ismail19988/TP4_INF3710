@@ -3,7 +3,6 @@ import 'reflect-metadata';
 import { Router } from 'express';
 //import { Message } from '../../../common/communication/message';
 import { DatabaseService } from '../services/DBService';
-import { Movie } from '../services/Movie';
 
 @injectable()
 export class MovieController {
@@ -21,11 +20,7 @@ export class MovieController {
     bindAllMoviesRoute(){
         this.router.get('/all', (req, response) => {
             this.DB_service.getAllMovies().then((res)=>{
-                let movies = new Array<Movie>();
-                movies.push(new Movie('a','b','c',2))
-                movies.push(new Movie('aa','bb','cc',22))
-
-                response.json({title:'les films!', movies});
+                response.json({title:'les films!', movies: res});
             });
         });
     }

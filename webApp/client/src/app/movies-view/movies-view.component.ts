@@ -18,10 +18,6 @@ export class MoviesViewComponent implements AfterViewInit {
   public videoPlayer: ElementRef<HTMLDivElement>;
 
   constructor(private communication: ServerCommunicationService) {
-    this.movie =  new Movie('','','',0)
-    this.movies.push(new Movie('test1', '', '', 0))
-    this.movies.push(new Movie('test2', '', '', 0))
-    this.movies.push(new Movie('test3', '', '', 0))
   }
 
 
@@ -34,9 +30,9 @@ export class MoviesViewComponent implements AfterViewInit {
   private async getAllMovies():Promise<Movie[]>{ 
     return await new Promise((response, req) =>{
       this.communication.getAllMovies().subscribe((res) => {
+        let serverAnswer = res as { title: string, movies: Movie[] };
         try {
-          console.log(res);
-          this.movies = (res as { title: string, movies: Movie[] }).movies;
+          this.movies = serverAnswer.movies;
           response(this.movies);
         } catch(err) {
           req(err);

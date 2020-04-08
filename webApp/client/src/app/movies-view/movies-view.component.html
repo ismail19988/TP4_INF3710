@@ -28,8 +28,7 @@
                 <div class="categories" style="padding-bottom:100%">
                     <h3 style="text-align:center;">Liste de films</h3>
                     <ul>
-                        <li *ngFor="let movie of movies"><a class="button">{{ movie.getTitle() }}</a></li>
-
+                        <li *ngFor="let movie of movies"><a class="button">{{ movie.title }}</a></li>
                     </ul>
                 </div>
             </div>
@@ -51,10 +50,10 @@
                 </div>
                 <div class = "movieContent" style = "width: 300px; height: 300px;">
                     <div *ngIf="movie != undefined">
-                        <h4>Titre: {{ movie.getTitle() }} </h4>
-                        <h4>Genre: {{ movie.getType() }} </h4>
-                        <h4>Année de prod: {{ movie.getProductionDate() }} </h4>
-                        <h4>Durée totale: {{ movie.getLenght() }} mins.</h4>
+                        <h4>Titre: {{ movie.title }} </h4>
+                        <h4>Genre: {{ movie.type }} </h4>
+                        <h4>Année de prod: {{ movie.productionDate }} </h4>
+                        <h4>Durée totale: {{ movie.lenghtMins }} mins.</h4>
                     </div>
                 </div>
             </div>

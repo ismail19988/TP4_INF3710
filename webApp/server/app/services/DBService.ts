@@ -21,7 +21,7 @@ export class DatabaseService {
 
     public constructor() {
         this.pool.connect();
-        //this.createSchema();
+        this.createSchema();
     }
 
     public async checkUsername(mail: string, password: string): Promise<Message> {
@@ -130,12 +130,12 @@ export class DatabaseService {
         let movies = new Array<Movie>();
         await this.pool.query('SELECT * FROM netflixDB.film').then((res)=>{
             for(let result of res.rows){
-                movies.push(new Movie(result.titre, result.genre, result.dateProduction, result.durée));
+                movies.push(new Movie(result.titre, result.genre, result.dateproduction, result.durée));
             }
         }).catch((err)=>{
             console.log('une erreur sest produite', err);
+            movies = [];
         })
-
         return movies;
     }
 
@@ -147,7 +147,6 @@ export class DatabaseService {
     populateDB() {
         console.log('populating')
         this.pool.query(data).then((res)=>{
-        console.log(res);
         }).catch((err)=>{
             console.log(err)
         });

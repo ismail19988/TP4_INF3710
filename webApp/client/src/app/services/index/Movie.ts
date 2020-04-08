@@ -1,19 +1,4 @@
 export class Movie {
-    constructor(private title: string, private type: string, private productionDate: string, private lenghtMins: number) {}
+    constructor(public title: string, public type: string, public productionDate: string, public lenghtMins: number) {}
 
-    public getTitle() {
-        return this.title;
-    }
-
-    public getType() {
-        return this.type;
-    }
-
-    public getProductionDate() {
-        return this.productionDate;
-    }
-
-    public getLenght() {
-        return this.lenghtMins;
-    }
 }
