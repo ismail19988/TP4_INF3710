@@ -136,7 +136,7 @@ export class DatabaseService {
         let movies = new Array<Movie>();
         await this.pool.query('SELECT * FROM netflixDB.film').then((res)=>{
             for(let result of res.rows){
-                movies.push(new Movie(result.nofilm, result.titre, result.genre, (result.dateproduction), result.durée));
+                movies.push(new Movie(result.nofilm, result.titre, result.genre, (result.dateproduction), result.duree));
             }
         }).catch((err)=>{
             console.log('une erreur sest produite', err);
@@ -217,9 +217,34 @@ export class DatabaseService {
 
         return answer;
     }
-    
 
 
+    async updateMovieData(noMovie: number, title: string, type: string, prodctuionDate: string, lenght: number): Promise<Message> {
+        let answer = { title: '', body: '' };
+        //let erreur = false;
+        console.log(noMovie, title, type, prodctuionDate, lenght );
+        await this.pool.query(`
+            UPDATE netflixDB.film SET
+                titre = '${title}',
+                genre = '${type}',
+                dateProduction = '${prodctuionDate}',
+                duree = ${lenght}
+            WHERE (noFilm = ${noMovie});`
+        ).then(()=>{
+            answer = {
+                title: 'Success',
+                body: 'Mise a jour du film réussie'
+            }
+        }).catch((err)=>{
+            console.log(err);
+            answer = {
+                title: 'Fail',
+                body: 'erreur lors de la mise a jour de la BD ' + err
+            }
+        })
+
+        return answer;
+    }
 
 
     async createSchema() {

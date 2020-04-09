@@ -48,14 +48,21 @@ export class ServerCommunicationService {
 
     getCanContinue(noMovie: number, mail: string) {
         return this.http
-            .post<number>(this.BASE_URL + '/movie/continue', {noFilm: noMovie, courriel:mail })
+            .post<number>(this.BASE_URL + '/movie/continue', { noFilm: noMovie, courriel:mail })
             .pipe(catchError(this.handleError<string>('Authentification error')));
     }
 
     saveMovieTime(noMovie: number, mail: string, min: number) {
         return this.http
-            .post<{ title: string; body: string }>(this.BASE_URL + '/movie/savetime', {noFilm: noMovie, courriel: mail, min: min })
+            .post<{ title: string; body: string }>(this.BASE_URL + '/movie/savetime', { noFilm: noMovie, courriel: mail, min: min })
             .pipe(catchError(this.handleError<string>('Authentification error')));
+    }
+
+    updateMovie(movie: Movie){
+        console.log(movie.lenghtMins)
+        return this.http
+        .post<{ title: string; body: string }>(this.BASE_URL + '/movie/update', { noFilm: movie.noMovie, title: movie.title, type:movie.type, productionDate:movie.productionDate.substr(0,10) , lenght: movie.lenghtMins })
+        .pipe(catchError(this.handleError<string>('Authentification error')));
     }
 
     private handleError<T>(request: string, result?: T): (error: Error) => Observable<T> {
@@ -63,4 +70,5 @@ export class ServerCommunicationService {
             return of(result as T);
         };
     }
+
 }

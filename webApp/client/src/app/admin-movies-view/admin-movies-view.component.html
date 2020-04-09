@@ -27,42 +27,25 @@
             </div>
         </div>
         <div class="films">
-
             <div style = "float: left;" *ngIf="movie != undefined; else noMovie" >
                 <form>
                     <h4> Modifier les donnees de {{ movie.title }} </h4>
-                    <input #mail type="text" placeholder="Courriel"/>
-                    <input #password type="password" placeholder="Mot de passe"/>
+                    <h5 #state>[]</h5>
+                    <input #title  placeholder="Titre" value ="{{ movie.title }}"/>
+                    <input #type  placeholder="Genre" value = "{{ movie.type }}"/>
+                    <input #productionDate  placeholder ="Annee de production (YYYY-MM-DD)" value = "{{ movie.productionDate.substr(0,10) }}"/>
+                    <input #lenght  placeholder="Durée" value = "{{ movie.lenghtMins }}"/>
                     <div id='btnContainer'>
-                        <div (mousedown)="connect()" class="button" value="Connection" style="text-align: center;" >Connection</div>
-                        <div (mousedown)="AdminEntry()" class="button" value="Entrée admin" style="text-align: center;">Entrée admin</div>
+                        <div (mousedown)="updateMovie()" class="button" value="Connection" style="text-align: center;" >Modifier</div>
+                        <div (mousedown)="deleteMovie()" class="button" value="Entrée admin" style="text-align: center;">Supprimer</div>
                     </div>
                 </form>
-
-
             </div>
-
             <ng-template #noMovie>
                 <div style = "float: left;">
                     <h3> Selectionnez un film a modifier</h3>
                 </div>
             </ng-template>
-
-            <div style="float:right">
-                <h3>Détails</h3>
-                <div class="films-heading">
-                    <div class="films-heading-right"></div>
-                    <div class="clear"></div>
-                </div>
-                <div class = "movieContent" style = "width: 300px; height: 300px;">
-                    <div *ngIf="movie != undefined">
-                        <h4>Titre: {{ movie.title }} </h4>
-                        <h4>Genre: {{ movie.type }} </h4>
-                        <h4>Année de prod: {{ movie.productionDate.substr(0,10) }} </h4>
-                        <h4>Durée totale: {{ movie.lenghtMins }} mins.</h4>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

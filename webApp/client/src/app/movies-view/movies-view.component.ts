@@ -25,7 +25,6 @@ export class MoviesViewComponent implements AfterViewInit {
 
   }
 
-
   async ngAfterViewInit() {
     await this.getAllMovies().catch((err)=>{
       console.log(err);

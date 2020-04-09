@@ -1,6 +1,7 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Movie } from '../services/index/Movie';
 import { ServerCommunicationService } from '../services/index/server-communication.service';
+
 
 @Component({
   selector: 'app-admin-movies-view',
@@ -11,6 +12,23 @@ export class AdminMoviesViewComponent implements AfterViewInit {
 
   private movies: Array<Movie> =  new Array<Movie>();
   private movie:Movie;
+
+  @ViewChild('title', { static: false })
+  private newTitle: ElementRef<HTMLInputElement>;
+
+  @ViewChild('type', { static: false })
+  private newType: ElementRef<HTMLInputElement>;
+
+  @ViewChild('productionDate', { static: false })
+  private newProductionDate: ElementRef<HTMLInputElement>;
+
+  @ViewChild('lenght', { static: false })
+  private newLenght: ElementRef<HTMLInputElement>;
+
+  @ViewChild('state', { static: false })
+  private stateRef: ElementRef<HTMLHeadElement>;
+
+
   constructor(private communication: ServerCommunicationService) { }
 
   async ngAfterViewInit() {
@@ -34,8 +52,6 @@ export class AdminMoviesViewComponent implements AfterViewInit {
   }
 
   async onMovieChange(elem: HTMLElement) {
-    let oldMovie: number = 0;
-    if(this.movie != undefined) oldMovie = this.movie.noMovie;
     let noMovie:number = +<string>elem.getAttribute('id');
     for(let movie of this.movies){
       if(movie.noMovie == noMovie){
@@ -44,5 +60,37 @@ export class AdminMoviesViewComponent implements AfterViewInit {
     }
   }
 
+  async updateMovie(){
+    this.movie = new Movie(this.movie.noMovie,
+    this.newTitle.nativeElement.value,
+    this.newType.nativeElement.value,
+    this.newProductionDate.nativeElement.value,
+    +this.newLenght.nativeElement.value)
+    await this.sendMovieData().then((res)=>{
+      console.log('res', res);
+      this.stateRef.nativeElement.innerHTML = '['+res.body+']'
+    }).catch((msg) => {
+      console.log(msg);
+    });
+
+    await this.getAllMovies().catch((err)=>{
+      console.log(err);
+    });
+    console.log(this.movies);
+
+  }
+
+  async sendMovieData(): Promise<{ title: string, body: string }>{
+    return await new Promise((response, req) => {
+      this.communication.updateMovie(this.movie).subscribe((res) => {
+        try {
+          let serverAnswer = res as { title: string, body:string};
+          response(serverAnswer);
+        } catch(err) {
+          req({ title: 'Fail', body: 'Le serveur est déconnecté' });
+        }
+      });
+  });
+  }
 
 }

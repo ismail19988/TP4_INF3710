@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS netflixDB.membreMensuel (
 	prix_abonnement			FlOAT,
 	date_échéhance			DATE,
 	PRIMARY KEY (courriel),
-	FOREIGN KEY (courriel) REFERENCES netflixDB.membre(courriel)
+	FOREIGN KEY (courriel) REFERENCES netflixDB.membre(courriel) ON DELETE CASCADE
 );
 
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS netflixDB.membreVisionnement (
 	codePostal				VARCHAR(6),
 	nbFilms					INTEGER,
 	PRIMARY KEY (courriel),
-	FOREIGN KEY (courriel) REFERENCES netflixDB.membre(courriel)
+	FOREIGN KEY (courriel) REFERENCES netflixDB.membre(courriel) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.carteCredit (
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS netflixDB.carteCredit (
 	CCV						INTEGER,
 	courriel				VARCHAR(30),
 	PRIMARY KEY (noCarte),
-	FOREIGN KEY (courriel) REFERENCES netflixDB.membre(courriel)
+	FOREIGN KEY (courriel) REFERENCES netflixDB.membre(courriel) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.film (
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS netflixDB.film (
 	titre					VARCHAR(30),
 	genre					VARCHAR(30),
 	dateProduction			DATE,
-	durée					INTEGER,
+	duree					INTEGER,
 	PRIMARY KEY (noFilm)
 );
 
@@ -63,8 +63,8 @@ CREATE TABLE IF NOT EXISTS netflixDB.visionnement (
 	dateVisionnement		DATE,
 	dureeVisionnement		INTEGER,
 	PRIMARY KEY (noFilm, courriel),
-	FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm),
-	FOREIGN KEY (courriel) REFERENCES netflixDB.membre(courriel)
+	FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm) ON DELETE CASCADE,
+	FOREIGN KEY (courriel) REFERENCES netflixDB.membre(courriel) ON DELETE CASCADE
 	
 );
 
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS netflixDB.dvdphysique (
 	numéroDVD				VARCHAR(5),
 	noFilm					INTEGER,
 	PRIMARY KEY (numéroDVD, noFilm),
-	FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm)
+	FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.achat (
@@ -82,8 +82,8 @@ CREATE TABLE IF NOT EXISTS netflixDB.achat (
 	coutEnvoi				FLOAT,
 	dateEnvoi				DATE,
 	PRIMARY KEY (courriel, noFilm, noDVD),
-	FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm),
-	FOREIGN KEY (courriel) REFERENCES netflixDB.membre(courriel)
+	FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm) ON DELETE CASCADE,
+	FOREIGN KEY (courriel) REFERENCES netflixDB.membre(courriel) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.ceremonie (
@@ -99,8 +99,8 @@ CREATE TABLE IF NOT EXISTS netflixDB.categorieOscar (
     idCeremonie                 VARCHAR(20),
     filmGagnant                 INTEGER,
     PRIMARY KEY (nomCategorie, idCeremonie),
-    FOREIGN KEY (idCeremonie) REFERENCES netflixDB.ceremonie(idCeremonie),
-    FOREIGN KEY (filmGagnant) REFERENCES netflixDB.film(noFilm)
+    FOREIGN KEY (idCeremonie) REFERENCES netflixDB.ceremonie(idCeremonie) ON DELETE CASCADE,
+    FOREIGN KEY (filmGagnant) REFERENCES netflixDB.film(noFilm) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.nomination (
@@ -108,8 +108,8 @@ CREATE TABLE IF NOT EXISTS netflixDB.nomination (
 	idCeremonie              VARCHAR(20),
     noFilm                   INTEGER,
     PRIMARY KEY (categorie, idCeremonie, noFilm),
-	FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm),
-	FOREIGN KEY (idCeremonie) REFERENCES netflixDB.ceremonie(idCeremonie)
+	FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm) ON DELETE CASCADE,
+	FOREIGN KEY (idCeremonie) REFERENCES netflixDB.ceremonie(idCeremonie) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.personne(
@@ -125,8 +125,8 @@ CREATE TABLE IF NOT EXISTS netflixDB.participation (
     noPersonne                INTEGER,
     noFilm                    INTEGER,
     PRIMARY KEY (noPersonne, noFilm),
-    FOREIGN KEY (noPersonne) REFERENCES netflixDB.personne(noPersonne),
-    FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm)
+    FOREIGN KEY (noPersonne) REFERENCES netflixDB.personne(noPersonne) ON DELETE CASCADE,
+    FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm) ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS netflixDB.role (
     nom                        VARCHAR(20),
@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS netflixDB.role (
 	noFilm					   INTEGER,
     salaire                    FLOAT,
 	PRIMARY KEY (nom, noPersonne, noFilm),
-	FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm),
-    FOREIGN KEY (noPersonne) REFERENCES netflixDB.personne(noPersonne)
+	FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm) ON DELETE CASCADE,
+    FOREIGN KEY (noPersonne) REFERENCES netflixDB.personne(noPersonne) ON DELETE CASCADE
 );
 `;
