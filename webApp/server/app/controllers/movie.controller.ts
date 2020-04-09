@@ -27,6 +27,7 @@ export class MovieController {
 
         this.router.post('/continue', (req, response) => {
             this.DB_service.getContinueMovie(req.body.noFilm, req.body.courriel).then((res)=>{
+                console.log(res);
                 response.json(res);
             }).catch(()=> {
                 response.json(0);
@@ -35,9 +36,11 @@ export class MovieController {
 
         this.router.post('/savetime', (req, response) => {
             console.log(req.body);
-            this.DB_service.saveMovieTime(req.body.noFilm, req.body.courriel, req.body.min).then(()=>{
-            }).catch(()=> {
-                response.json(0);
+            this.DB_service.saveMovieTime(req.body.noFilm, req.body.courriel, req.body.min).then((res)=>{
+                console.log(res)
+                response.json({ title:res.title, body:res.body })
+            }).catch((err)=> {
+                response.json({ title:'Fail', body:err });
             });
         });
     }

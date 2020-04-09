@@ -149,7 +149,6 @@ export class DatabaseService {
     public async getContinueMovie(noFilm: number, courriel: string): Promise<number> {
         let number = 0;
         await this.pool.query(`SELECT dureeVisionnement FROM netflixDB.visionnement WHERE (noFilm = ${noFilm} AND courriel = '${courriel}')`).then((res)=>{
-            console.log(res.rowCount);
             if(res.rowCount > 0){
                 number = res.rows[0].dureevisionnement;
             }
@@ -182,8 +181,11 @@ export class DatabaseService {
 
         if(answer.title !== 'Fail'){
             if(rowCount > 0) {
-                console.log('UPDATING...');
-                await this.pool.query(`UPDATE netflixDB.visionnement SET dureeVisionnement = ${min} WHERE (courriel = '${courriel}' AND noFilm = ${noFilm})`).then((res)=>{
+                console.log('Deletong old value...');
+                await this.pool.query(`
+                    DELETE FROM netflixDB.visionnement WHERE (courriel = '${courriel}' AND noFilm = ${noFilm});
+                    INSERT INTO netflixDB.visionnement VALUES ('${courriel}', ${noFilm}, '${today}', ${min});
+                `).then((res)=>{
                     answer = {
                         title: 'Success', 
                         body: 'insertion a la DB reussie'
@@ -210,18 +212,9 @@ export class DatabaseService {
                     };
                 });
             }
-            await this.pool.query(`SELECT dureeVisionnement FROM netflixDB.visionnement WHERE (noFilm = ${noFilm} AND courriel = '${courriel}')`).then((res)=>{
-                console.log(res.rows[0]);
-            }).catch((err)=>{
-                console.log('une erreur sest produite', err);
-                answer = {
-                    title: 'Fail',
-                    body: "Une erreur s'est produite " + err,
-                };
-            })
+           
         }
 
-        console.log(answer);
         return answer;
     }
     

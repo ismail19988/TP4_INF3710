@@ -85,8 +85,13 @@ export class MoviesViewComponent implements AfterViewInit {
     }
 
     if(this.StartedWatching) {
-      this.saveTime(oldMovie);
-      this.timer.resetTimer();
+      await this.saveTime(oldMovie).then(()=>{
+        console.log('ici')
+        this.timer.resetTimer();
+      }).catch(err =>{
+        console.log(err);
+      });
+      
       this.videoPlayer.nativeElement.style.backgroundImage = 'url(https://www.svgrepo.com/show/13672/play-button.svg)';
     }
     this.getCanContinue(noMovie).then((res)=> {
@@ -107,9 +112,11 @@ export class MoviesViewComponent implements AfterViewInit {
     return await new Promise((response, request)=>{
       this.communication.saveMovieTime(oldMovie, this.session.mail, this.timer.getSec()).subscribe((res) => {
         console.log('Temps sauvegardé');
+        response('saved');
       });
     })
   }
+  
   async getCanContinue(noMovie:number):Promise<number>{
     return await new Promise((response, request) => {
       this.communication.getCanContinue(noMovie, this.session.mail).subscribe((res) => {

@@ -54,7 +54,7 @@ export class ServerCommunicationService {
 
     saveMovieTime(noMovie: number, mail: string, min: number) {
         return this.http
-            .post<{ title: string; movies: Movie[] }>(this.BASE_URL + '/movie/savetime', {noFilm: noMovie, courriel: mail, min: min })
+            .post<{ title: string; body: string }>(this.BASE_URL + '/movie/savetime', {noFilm: noMovie, courriel: mail, min: min })
             .pipe(catchError(this.handleError<string>('Authentification error')));
     }
 
