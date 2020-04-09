@@ -2,6 +2,8 @@
 
 * {
     display: block;
+    font-family: 'Source Sans Pro', sans-serif;
+    color:#727272;
 }
 
 ol,
@@ -49,20 +51,9 @@ img {
     border-right: none;
 }
 .recherche {
-    width: 30%;
-    padding-top: 28px;
+    width: 10%;
+    padding-top: 20px;
     float: right;
-}
-
-input[type='text'] {
-    width: 60%;
-    padding: 10px;
-    float: left;
-    border: 1px solid rgba(85, 85, 85, 0.15);
-    border: none;
-    outline: none;
-    font-family: 'gandhi_sansregular';
-    color: #888;
 }
 
 #sumbit {
@@ -71,9 +62,7 @@ input[type='text'] {
     width: 80px;
     cursor: pointer;
     border: none;
-    color: #000;
     outline: none;
-    font-family: 'gandhi_sansregular';
     background-color: white;
 }
 
@@ -122,21 +111,58 @@ input[type='text'] {
     float: left;
     text-align: center;
     border: 1px solid rgba(235, 235, 235, 0.53);
+    color:#727272;
+    text-shadow:1px 1px 0px #292929;
 }
 
 .button {
-    background: #000;
+    background-color:#000;
     padding: 10px;
     cursor: pointer;
     border: none;
     color: #fff;
     outline: none;
-    font-family: 'gandhi_sansregular';
     margin: 10px 0 0 0;
     font-size: 0.875em;
 }
 
 h3, h1 {
-    font-family: 'gandhi_sansregular';
     color: #888;
 }
+
+form {
+    position:relative;
+    width:450px;
+    height:500px;
+    margin-left: 70px;
+    text-align:center;
+    background:#353535;
+    padding:40px;
+    box-shadow: 10px 10px 10px;
+  }
+  
+  form h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size:2em;
+    font-weight:300;
+    margin-bottom:25px;
+    color:#727272;
+    text-shadow:1px 1px 0px #292929;
+  }
+
+  form input {
+    display:block;
+    width:420px;
+    padding:14px;
+    border-radius:6px;
+    border:0;
+    margin-bottom:12px;
+    color: #191A21;
+    font-weight:600;
+    font-size:16px;
+  }
+
+  #btnContainer{
+    width:450px;
+    height: 80px;
+  }

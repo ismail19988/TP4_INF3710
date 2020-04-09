@@ -1,1 +1,68 @@
-<p>admin-movies-view works!</p>
+<!--insipiration de la page : https://w3layouts.com/video-streaming-website-template-videostube/ -->
+
+<div class="header">
+    <div class="wrap">
+        <div class="barre_logo_recherche">
+            <h1>NetflixPoly</h1>
+            <div class="recherche">
+                <div>
+                    <div class="button" style="text-align: center; padding-left: 10px;">déconnexion</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+<div>
+    <div class="wrap">
+        <div class="Barre_laterale">
+            <div class="items_barre_laterale">
+                <div class="clear"></div>
+                <div class="categories" style="padding-bottom:100%">
+                    <h3 style="text-align:center;">Liste de films a modifer</h3>
+                    <ul>
+                        <li *ngFor="let movie of movies"><a (click)= "onMovieChange($event.target)" id = "{{ movie.noMovie }}" class="button">{{ movie.title }} #{{ movie.noMovie }}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="films">
+
+            <div style = "float: left;" *ngIf="movie != undefined; else noMovie" >
+                <form>
+                    <h4> Modifier les donnees de {{ movie.title }} </h4>
+                    <input #mail type="text" placeholder="Courriel"/>
+                    <input #password type="password" placeholder="Mot de passe"/>
+                    <div id='btnContainer'>
+                        <div (mousedown)="connect()" class="button" value="Connection" style="text-align: center;" >Connection</div>
+                        <div (mousedown)="AdminEntry()" class="button" value="Entrée admin" style="text-align: center;">Entrée admin</div>
+                    </div>
+                </form>
+
+
+            </div>
+
+            <ng-template #noMovie>
+                <div style = "float: left;">
+                    <h3> Selectionnez un film a modifier</h3>
+                </div>
+            </ng-template>
+
+            <div style="float:right">
+                <h3>Détails</h3>
+                <div class="films-heading">
+                    <div class="films-heading-right"></div>
+                    <div class="clear"></div>
+                </div>
+                <div class = "movieContent" style = "width: 300px; height: 300px;">
+                    <div *ngIf="movie != undefined">
+                        <h4>Titre: {{ movie.title }} </h4>
+                        <h4>Genre: {{ movie.type }} </h4>
+                        <h4>Année de prod: {{ movie.productionDate.substr(0,10) }} </h4>
+                        <h4>Durée totale: {{ movie.lenghtMins }} mins.</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -46,19 +46,6 @@ export class MoviesViewComponent implements AfterViewInit {
     })
   }
 
-  async getMovie(title:string):Promise<Movie> {
-   return await new Promise((response, req) => {
-      this.communication.getMovie(title).subscribe((res) => {
-        try {
-          this.movie = (res as { title: string, body: Movie }).body;
-          response(this.movie);
-        } catch(err) {
-          req(err);
-        }
-      });
-    })
-  }
-
   switchState() {
     this.playing = !this.playing
     if(this.playing){

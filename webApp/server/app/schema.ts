@@ -88,8 +88,8 @@ CREATE TABLE IF NOT EXISTS netflixDB.achat (
 
 CREATE TABLE IF NOT EXISTS netflixDB.ceremonie (
     idCeremonie                 VARCHAR(20),
-    maitreCeremonie              VARCHAR(20),
-    dateCeremonie                DATE,
+    maitreCeremonie             VARCHAR(20),
+    dateCeremonie               DATE,
     lieu                        VARCHAR(20),
     PRIMARY KEY (idCeremonie)
 );
@@ -104,34 +104,37 @@ CREATE TABLE IF NOT EXISTS netflixDB.categorieOscar (
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.nomination (
-    categorie                VARCHAR(20),
-    noFilm                   INT,
-    PRIMARY KEY (categorie, noFilm),
-    FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm)
+	categorie                VARCHAR(20),
+	idCeremonie              VARCHAR(20),
+    noFilm                   INTEGER,
+    PRIMARY KEY (categorie, idCeremonie, noFilm),
+	FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm),
+	FOREIGN KEY (idCeremonie) REFERENCES netflixDB.ceremonie(idCeremonie)
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.personne(
-    noPersonne                INT,
+    noPersonne                INTEGER,
     nom                    	  VARCHAR(20),
-    age                       INT,
+    age                       INTEGER,
     nationalite               VARCHAR(20),
     sexe                      VARCHAR(10),
     PRIMARY KEY (noPersonne)
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.participation (
-    noPersonne                INT,
-    noFilm                    INT,
+    noPersonne                INTEGER,
+    noFilm                    INTEGER,
     PRIMARY KEY (noPersonne, noFilm),
     FOREIGN KEY (noPersonne) REFERENCES netflixDB.personne(noPersonne),
     FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm)
 );
 CREATE TABLE IF NOT EXISTS netflixDB.role (
     nom                        VARCHAR(20),
-    noPersonne                 INT,
+	noPersonne                 INTEGER,
+	noFilm					   INTEGER,
     salaire                    FLOAT,
-    PRIMARY KEY (nom, noPersonne),
+	PRIMARY KEY (nom, noPersonne, noFilm),
+	FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm),
     FOREIGN KEY (noPersonne) REFERENCES netflixDB.personne(noPersonne)
 );
-
 `;
