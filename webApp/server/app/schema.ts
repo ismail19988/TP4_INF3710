@@ -109,6 +109,7 @@ CREATE TABLE IF NOT EXISTS netflixDB.nomination (
     PRIMARY KEY (categorie, noFilm),
     FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm)
 );
+
 CREATE TABLE IF NOT EXISTS netflixDB.personne(
     noPersonne                INT,
     nom                    	  VARCHAR(20),

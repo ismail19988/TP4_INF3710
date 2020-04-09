@@ -1,29 +1,12 @@
 <!--insipiration du code HTML formulaire de connexion prise ici: https://codepen.io/shaligramk/pen/sKCJI/-->
 <form>
-    <h4> Enregistrer utilisateur </h4>
-    <h5 #state>[ ]</h5>
-    <input #lName type="text" placeholder="Nom"/>
-    <input #fName type="" placeholder="Prénom"/>
-    <input #mail type="" placeholder="Courriel"/>
-    <input #password type="password" placeholder="Mot de passe"/>
-    <input #address type="text" placeholder="Adresse"/>
-    <input #postalCode type="text" placeholder="Code postal"/>
-
+    <h4> Que souhaitez-vous faire? </h4>
     <div id='btnContainer'>
-        <div #vMember (mousedown)="switchMember(true);" class="button" style="text-align: center; border-style: solid; border-color: #5cb85c;" >Membre Mensuel</div>
-        <div #aMember (mousedown)="switchMember(false);" class="button" style="text-align: center;">Membre par vue</div>
+        <div (mousedown)="registerUserPage()" class="button" value="Connection" style="text-align: center;" >Enregistrer un nouvel utilisateur</div>
+        <div (mousedown)="registerMoviePage()" class="button" value="Connection" style="text-align: center;" >Enregistrer un nouveau film</div>
+        <div (mousedown)="viewMovies()" class="button" value="Connection" style="text-align: center;" >Afficher/Supprimer les films</div>
+        <div (mousedown)="backToLoginPage()" class="button" value="Connection" style="text-align: center;" >Retour a la page de connexion</div>
     </div>
-
-    <div>
-        <input #price type="text" placeholder="Prix abonnement" [disabled] = "!membreMensuel"/>
-        <input #date type="text" placeholder="Date d'échéhance (YYYY-MM-DD)" [disabled] = "!membreMensuel"/>
-    </div>
-
-    <div id='btnContainer'>
-        <div (mousedown)="register()" class="button" value="Connection" style="text-align: center;" >Enregistrer l'utilisateur</div>
-        <div (mousedown)="navigateConnectionPage()" class="button" value="Connection" style="text-align: center;" >Page de connexion</div>
-    </div>
-    
 </form>
 
 
