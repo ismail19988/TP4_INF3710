@@ -65,6 +65,12 @@ export class ServerCommunicationService {
         .pipe(catchError(this.handleError<string>('Authentification error')));
     }
 
+    deleteMovie(noMovie: number){
+        return this.http
+        .post<{ title: string; body: string }>(this.BASE_URL + '/movie/delete', {body:noMovie})
+        .pipe(catchError(this.handleError<string>('Authentification error')));
+    }
+
     private handleError<T>(request: string, result?: T): (error: Error) => Observable<T> {
         return (error: Error): Observable<T> => {
             return of(result as T);

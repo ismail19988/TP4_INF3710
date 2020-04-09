@@ -50,7 +50,16 @@ export class MovieController {
                 response.json({ title:'Fail', body:err });
             });
         });
-    }
 
+
+        this.router.post('/delete', (req, response) => {
+            console.log(req.body);
+            this.DB_service.deleteMovie(req.body.body).then((res)=>{
+                response.json({ title: res.title, body: res.body });
+            }).catch((err)=> {
+                response.json({ title:'Fail', body:err });
+            });
+        });
+    }
 
 }

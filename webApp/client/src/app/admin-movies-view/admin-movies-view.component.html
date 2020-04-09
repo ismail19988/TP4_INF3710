@@ -37,7 +37,7 @@
                     <input #lenght  placeholder="Durée" value = "{{ movie.lenghtMins }}"/>
                     <div id='btnContainer'>
                         <div (mousedown)="updateMovie()" class="button" value="Connection" style="text-align: center;" >Modifier</div>
-                        <div (mousedown)="deleteMovie()" class="button" value="Entrée admin" style="text-align: center;">Supprimer</div>
+                        <div (mousedown)="deleteCurrentMovie()" class="button" value="Entrée admin" style="text-align: center;">Supprimer</div>
                     </div>
                 </form>
             </div>

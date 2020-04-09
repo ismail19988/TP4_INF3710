@@ -246,6 +246,24 @@ export class DatabaseService {
         return answer;
     }
 
+    async deleteMovie(noMovie: number): Promise<Message>{
+        let answer = { title: '', body: '' };
+
+        await this.pool.query(`DELETE FROM netflixDB.film WHERE (noFilm = ${noMovie});`).then((res)=>{
+            answer = {
+                title:'Success',
+                body:'Suppression reussie!'
+            }
+        }).catch((err)=>{
+            answer = {
+                title: 'Fail',
+                body: 'erreur lors de la mise a jour de la BD ' + err
+            }
+        });
+
+        return answer;
+    }
+
 
     async createSchema() {
         await this.pool.query(schema).catch((err)=>{

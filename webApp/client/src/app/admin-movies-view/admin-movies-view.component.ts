@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Movie } from '../services/index/Movie';
 import { ServerCommunicationService } from '../services/index/server-communication.service';
+import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 
 @Component({
@@ -68,9 +69,9 @@ export class AdminMoviesViewComponent implements AfterViewInit {
     +this.newLenght.nativeElement.value)
     await this.sendMovieData().then((res)=>{
       console.log('res', res);
-      this.stateRef.nativeElement.innerHTML = '['+res.body+']'
-    }).catch((msg) => {
-      console.log(msg);
+      this.stateRef.nativeElement.innerHTML = '[' + res.body + ']'
+    }).catch(() => {
+      this.stateRef.nativeElement.innerHTML = '[le serveur est deconnecter. Action impossible]';
     });
 
     await this.getAllMovies().catch((err)=>{
@@ -78,6 +79,35 @@ export class AdminMoviesViewComponent implements AfterViewInit {
     });
     console.log(this.movies);
 
+  }
+
+  async deleteCurrentMovie(){
+    let sucess = false;
+    await this.sendMovieToDelete(this.movie.noMovie).then((res)=>{
+      this.stateRef.nativeElement.innerHTML = '['+ res.body + ']'
+      sucess = true;
+    }).catch((err) =>{
+      this.stateRef.nativeElement.innerHTML = '[le serveur est deconnecter. Action impossible]';
+    });
+
+    await this.getAllMovies().catch((err)=>{
+    });
+    
+    if(sucess)
+    setTimeout(() => { delete(this.movie); }, 1000);
+  }
+
+  async sendMovieToDelete(noMovie: number) : Promise<{ title: string, body: string }>{
+    return await new Promise((response, req) => {
+      this.communication.deleteMovie(this.movie.noMovie).subscribe((res) => {
+        try {
+          let serverAnswer = res as { title: string, body:string};
+          response(serverAnswer);
+        } catch(err) {
+          req({ title: 'Fail', body: 'Le serveur est déconnecté' });
+        }
+      });
+  });
   }
 
   async sendMovieData(): Promise<{ title: string, body: string }>{
