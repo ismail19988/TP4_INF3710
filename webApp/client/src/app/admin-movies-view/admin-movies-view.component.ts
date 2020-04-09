@@ -1,8 +1,6 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Movie } from '../services/index/Movie';
 import { ServerCommunicationService } from '../services/index/server-communication.service';
-import { typeWithParameters } from '@angular/compiler/src/render3/util';
-
 
 @Component({
   selector: 'app-admin-movies-view',
@@ -74,10 +72,8 @@ export class AdminMoviesViewComponent implements AfterViewInit {
       this.stateRef.nativeElement.innerHTML = '[le serveur est deconnecter. Action impossible]';
     });
 
-    await this.getAllMovies().catch((err)=>{
-      console.log(err);
-    });
-    console.log(this.movies);
+    await this.getAllMovies().catch((err)=>{});
+    setTimeout(() => {this.stateRef.nativeElement.innerHTML = '[]';},1000);
 
   }
 
@@ -90,11 +86,13 @@ export class AdminMoviesViewComponent implements AfterViewInit {
       this.stateRef.nativeElement.innerHTML = '[le serveur est deconnecter. Action impossible]';
     });
 
-    await this.getAllMovies().catch((err)=>{
-    });
-    
+    await this.getAllMovies().catch((err)=>{});
+
     if(sucess)
     setTimeout(() => { delete(this.movie); }, 1000);
+    else{
+      setTimeout(() => {this.stateRef.nativeElement.innerHTML = '[]';},1000);
+    }
   }
 
   async sendMovieToDelete(noMovie: number) : Promise<{ title: string, body: string }>{
