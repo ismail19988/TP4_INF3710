@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminEntryComponent },
   { path: 'movies', component: MoviesViewComponent },
   { path: 'admin/register/users', component: AdminMemberAddingComponent },
-  { path: '/admin/view/movies', component: AdminMoviesViewComponent }
+  { path: 'admin/view/movies', component: AdminMoviesViewComponent }
 ];
 
 
