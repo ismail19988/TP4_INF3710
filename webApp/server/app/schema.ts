@@ -46,8 +46,10 @@ CREATE TABLE IF NOT EXISTS netflixDB.carteCredit (
 	FOREIGN KEY (courriel) REFERENCES netflixDB.membre(courriel) ON DELETE CASCADE
 );
 
+CREATE SEQUENCE netflixDB.noFilm_seq;
+
 CREATE TABLE IF NOT EXISTS netflixDB.film (
-	noFilm					INTEGER,
+	noFilm					INTEGER NOT NULL DEFAULT NEXTVAL('netflixDB.noFilm_seq'),
 	titre					VARCHAR(30),
 	genre					VARCHAR(30),
 	dateProduction			DATE,

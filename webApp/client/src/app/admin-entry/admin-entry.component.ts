@@ -21,11 +21,11 @@ export class AdminEntryComponent {
     }
 
     registerMoviePage(){
-        this.router.navigate(['/admin/register/movies']);
+        this.router.navigate(['admin/movies/add']);
     }
 
     viewMovies(){
-        this.router.navigate(['/admin/view/movies']);
+        this.router.navigate(['admin/movies/edit']);
     }
 
     backToLoginPage(){

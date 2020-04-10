@@ -53,8 +53,15 @@ export class MovieController {
 
 
         this.router.post('/delete', (req, response) => {
-            console.log(req.body);
             this.DB_service.deleteMovie(req.body.body).then((res)=>{
+                response.json({ title: res.title, body: res.body });
+            }).catch((err)=> {
+                response.json({ title:'Fail', body:err });
+            });
+        });
+
+        this.router.post('/reg', (req, response) => {
+            this.DB_service.addMovie(req.body.title, req.body.type, req.body.productionDate, req.body.lenght).then((res)=>{
                 response.json({ title: res.title, body: res.body });
             }).catch((err)=> {
                 response.json({ title:'Fail', body:err });

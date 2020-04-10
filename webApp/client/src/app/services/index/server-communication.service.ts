@@ -34,6 +34,17 @@ export class ServerCommunicationService {
             .pipe(catchError(this.handleError<string>('Registering error')));
     }
 
+    registerMovie(movieData: {
+        title: string,
+        type: string,
+        productionDate: string,
+        lenght: number,
+    }){
+        return this.http
+        .post<{ title: string; body: string }>(this.BASE_URL + '/movie/reg', movieData)
+        .pipe(catchError(this.handleError<string>('Registering error')));
+    }
+
     getMovie(title:string) {
         return this.http
             .post<{ title: string; body: Movie }>(this.BASE_URL + '/movie', title)

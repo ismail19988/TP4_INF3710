@@ -8,9 +8,10 @@ import { AdminEntryComponent } from './admin-entry/admin-entry.component';
 import { MoviesViewComponent } from './movies-view/movies-view.component';
 import { AdminMemberAddingComponent } from './admin-member-adding/admin-member-adding.component';
 import { AdminMoviesViewComponent } from './admin-movies-view/admin-movies-view.component';
+import { AdminMovieAddingComponent } from './admin-movie-adding/admin-movie-adding.component';
 
 @NgModule({
-    declarations: [AppComponent, LoginComponent, AdminEntryComponent, MoviesViewComponent, AdminMemberAddingComponent, AdminMoviesViewComponent],
+    declarations: [AppComponent, LoginComponent, AdminEntryComponent, MoviesViewComponent, AdminMemberAddingComponent, AdminMoviesViewComponent, AdminMovieAddingComponent],
     imports: [BrowserModule, HttpClientModule, AppRoutingModule],
     providers: [],
     bootstrap: [AppComponent],

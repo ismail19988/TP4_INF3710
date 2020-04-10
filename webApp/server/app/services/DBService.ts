@@ -222,7 +222,6 @@ export class DatabaseService {
     async updateMovieData(noMovie: number, title: string, type: string, prodctuionDate: string, lenght: number): Promise<Message> {
         let answer = { title: '', body: '' };
         //let erreur = false;
-        console.log(noMovie, title, type, prodctuionDate, lenght );
         await this.pool.query(`
             UPDATE netflixDB.film SET
                 titre = '${title}',
@@ -263,6 +262,26 @@ export class DatabaseService {
 
         return answer;
     }
+
+    async addMovie(title:string, type:string, prodctuionDate:string, lenght:number): Promise<Message>{
+        let answer = { title: '', body: '' };
+
+        await this.pool.query(`INSERT INTO netflixDB.film VALUES (DEFAULT, '${title}', '${type}', '${prodctuionDate}', ${lenght});`).then((res)=>{
+            answer = {
+                title:'Success',
+                body:'Ajout reussi!'
+            }
+        }).catch((err)=>{
+            console.log(err);
+            answer = {
+                title: 'Fail',
+                body: 'erreur lors de la mise a jour de la BD ' + err
+            }
+        });
+
+        return answer;
+    }
+
 
 
     async createSchema() {
