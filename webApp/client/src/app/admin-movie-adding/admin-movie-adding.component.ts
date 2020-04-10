@@ -78,6 +78,7 @@ export class AdminMovieAddingComponent implements OnInit {
 
     return true;
   }
+  
   navigateConnectionPage() {
       this.router.navigate(['/']);
   }

@@ -29,7 +29,6 @@ export class ValidationService {
     return text.length > 0;
   } 
   validateInteger(number: string){
-    console.log(Number.isInteger(+number));
     return Number.isInteger(+number);
   }
 

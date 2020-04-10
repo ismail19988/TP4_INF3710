@@ -74,7 +74,6 @@ export class AdminMoviesViewComponent implements AfterViewInit {
       }).catch(() => {
         this.stateRef.nativeElement.innerHTML = '[le serveur est deconnecter. Action impossible]';
       });
-
       await this.getAllMovies().catch((err)=>{});
       setTimeout(() => {this.stateRef.nativeElement.innerHTML = '[]';},1000);
     }
