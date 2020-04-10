@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Movie } from '../services/index/Movie';
 import { ServerCommunicationService } from '../services/index/server-communication.service';
+import { ValidationService } from '../services/index/validation.service';
 
 @Component({
   selector: 'app-admin-movies-view',
@@ -28,7 +29,7 @@ export class AdminMoviesViewComponent implements AfterViewInit {
   private stateRef: ElementRef<HTMLHeadElement>;
 
 
-  constructor(private communication: ServerCommunicationService) { }
+  constructor(private communication: ServerCommunicationService, private validation: ValidationService) { }
 
   async ngAfterViewInit() {
     await this.getAllMovies().catch((err)=>{
@@ -59,21 +60,24 @@ export class AdminMoviesViewComponent implements AfterViewInit {
     }
   }
 
-  async updateMovie(){
-    this.movie = new Movie(this.movie.noMovie,
-    this.newTitle.nativeElement.value,
-    this.newType.nativeElement.value,
-    this.newProductionDate.nativeElement.value,
-    +this.newLenght.nativeElement.value)
-    await this.sendMovieData().then((res)=>{
-      console.log('res', res);
-      this.stateRef.nativeElement.innerHTML = '[' + res.body + ']'
-    }).catch(() => {
-      this.stateRef.nativeElement.innerHTML = '[le serveur est deconnecter. Action impossible]';
-    });
+  async updateMovie() {
 
-    await this.getAllMovies().catch((err)=>{});
-    setTimeout(() => {this.stateRef.nativeElement.innerHTML = '[]';},1000);
+    if(this.validate()) {
+      this.movie = new Movie(this.movie.noMovie,
+      this.newTitle.nativeElement.value,
+      this.newType.nativeElement.value,
+      this.newProductionDate.nativeElement.value,
+      +this.newLenght.nativeElement.value)
+      await this.sendMovieData().then((res)=>{
+        console.log('res', res);
+        this.stateRef.nativeElement.innerHTML = '[' + res.body + ']'
+      }).catch(() => {
+        this.stateRef.nativeElement.innerHTML = '[le serveur est deconnecter. Action impossible]';
+      });
+
+      await this.getAllMovies().catch((err)=>{});
+      setTimeout(() => {this.stateRef.nativeElement.innerHTML = '[]';},1000);
+    }
 
   }
 
@@ -119,6 +123,30 @@ export class AdminMoviesViewComponent implements AfterViewInit {
         }
       });
   });
+  }
+
+  private validate(): boolean{
+    if(!this.validation.validateNotNull(this.newTitle.nativeElement.value)) {
+      this.stateRef.nativeElement.innerHTML = '[Veuillez entrer un titre au film]';
+      return false;
+    }
+
+    if(!this.validation.validateNotNull(this.newType.nativeElement.value)) {
+      this.stateRef.nativeElement.innerHTML = '[Veuillez entrer un genre au film]';
+      return false;
+    }
+
+    if(!this.validation.validateDate(this.newProductionDate.nativeElement.value)) {
+      this.stateRef.nativeElement.innerHTML = '[Veuillez entrer la date de production du film (au format aaaa-mm-jj)]';
+      return false;
+    }
+    
+    if(!this.validation.validateNotNull(this.newLenght.nativeElement.value) || !this.validation.validateInteger(this.newLenght.nativeElement.value)) {
+      this.stateRef.nativeElement.innerHTML = '[Veuillez entrer la durée du film (en minutes)]';
+      return false;
+    }
+
+    return true;
   }
 
 }
