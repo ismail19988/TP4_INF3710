@@ -2,6 +2,7 @@ import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Movie } from '../services/index/Movie';
 import { ServerCommunicationService } from '../services/index/server-communication.service';
 import { ValidationService } from '../services/index/validation.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-movies-view',
@@ -29,7 +30,7 @@ export class AdminMoviesViewComponent implements AfterViewInit {
   private stateRef: ElementRef<HTMLHeadElement>;
 
 
-  constructor(private communication: ServerCommunicationService, private validation: ValidationService) { }
+  constructor(private communication: ServerCommunicationService, private validation: ValidationService, private router: Router) { }
 
   async ngAfterViewInit() {
     await this.getAllMovies().catch((err)=>{
@@ -146,6 +147,10 @@ export class AdminMoviesViewComponent implements AfterViewInit {
     }
 
     return true;
+  }
+
+  backToOption()  {
+    this.router.navigate(['/admin'])
   }
 
 }

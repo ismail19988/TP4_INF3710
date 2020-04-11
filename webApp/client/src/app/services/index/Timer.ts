@@ -1,12 +1,7 @@
 export class Timer {
 
-    private sec = 0;
     private timer: any;
-    constructor(private min = 0, private endMin:number) {}
-
-    getMin() {
-        return this.min;
-    }
+    constructor(private sec = 0, private endMin:number) {}
 
     getSec() {
         return this.sec;
@@ -14,12 +9,9 @@ export class Timer {
 
     private timing(){
         console.log('here')
-        if(this.sec == 59) {
+
+        if(this.endMin == this.sec){
             this.sec = 0;
-            this.min++;
-            if(this.endMin == this.min){
-                this.stopTimer();
-            }
         } else {
             this.sec++;
         }
@@ -38,12 +30,10 @@ export class Timer {
 
     resetTimer() {
         clearTimeout(this.timer);
-        this.min = 0;
         this.sec = 0;
     }
 
-    setMin(min: number){
-        this.min = min;
-        this.sec = 0;
+    setSec(sec: number){
+        this.sec = sec;
     }
 }

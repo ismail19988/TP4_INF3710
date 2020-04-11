@@ -118,7 +118,7 @@ export class AdminMemberAddingComponent implements OnInit {
         return false;
     }
 
-    if(!this.validation.validateNotNull(this.price.nativeElement.value) || !this.validation.validateNumber(this.price.nativeElement.value)){
+    if((!this.validation.validateNotNull(this.price.nativeElement.value) || !this.validation.validateNumber(this.price.nativeElement.value))  && this.membreMensuel){
         this.stateRef.nativeElement.innerHTML = "[Veuillez Entrer un prix d'abonnement valide]";
         return false;
     }

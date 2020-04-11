@@ -1,15 +1,16 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { ServerCommunicationService } from '../services/index/server-communication.service';
 import { Movie } from '../services/index/Movie';
 import { Timer } from '../services/index/Timer';
 import { UserSessionService } from '../user-session.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movies-view',
   templateUrl: './movies-view.component.html',
   styleUrls: ['./movies-view.component.scss']
 })
-export class MoviesViewComponent implements AfterViewInit {
+export class MoviesViewComponent implements AfterViewInit, OnInit, OnDestroy {
 
   private movie: Movie;
   private timer:Timer;
@@ -21,9 +22,20 @@ export class MoviesViewComponent implements AfterViewInit {
   @ViewChild('videoPlayer', { static: false })
   public videoPlayer: ElementRef<HTMLDivElement>;
 
-  constructor(private communication: ServerCommunicationService, private session:UserSessionService) {
+  constructor(private communication: ServerCommunicationService, private session:UserSessionService, private router: Router) {
 
   }
+  ngOnDestroy(): void {
+    this.saveMovie();
+  }
+
+  ngOnInit(): void {
+    if(!this.session.isconnected){
+      this.router.navigate(['/']);
+    }
+  }
+
+  
 
   async ngAfterViewInit() {
     await this.getAllMovies().catch((err)=>{
@@ -61,25 +73,17 @@ export class MoviesViewComponent implements AfterViewInit {
 
   async onMovieChange(elem: HTMLElement) {
     this.playing = false;
-    let oldMovie: number = 0;
-    if(this.movie != undefined) oldMovie = this.movie.noMovie;
-    let noMovie:number = +<string>elem.getAttribute('id');
+    if(this.movie != undefined) { 
+      this.saveMovie();
+    }
+
+    let noMovie: number = +<string>elem.getAttribute('id');
     for(let movie of this.movies){
       if(movie.noMovie == noMovie){
         this.movie = movie;
       }
     }
 
-    if(this.StartedWatching) {
-      await this.saveTime(oldMovie).then(()=>{
-        console.log('ici')
-        this.timer.resetTimer();
-      }).catch(err =>{
-        console.log(err);
-      });
-      
-      this.videoPlayer.nativeElement.style.backgroundImage = 'url(https://www.svgrepo.com/show/13672/play-button.svg)';
-    }
     this.getCanContinue(noMovie).then((res)=> {
       this.canContinue = (res !== 0) && res != undefined;
       this.whereToContinue = res;
@@ -103,11 +107,11 @@ export class MoviesViewComponent implements AfterViewInit {
     })
   }
   
-  async getCanContinue(noMovie:number):Promise<number>{
+  async getCanContinue(noMovie:number): Promise<number> {
     return await new Promise((response, request) => {
       this.communication.getCanContinue(noMovie, this.session.mail).subscribe((res) => {
         try {
-          response(res as number)
+          response(res as number) 
         } catch(err) {
           request(err);
         }
@@ -116,8 +120,25 @@ export class MoviesViewComponent implements AfterViewInit {
   }
 
   continue(doContinue: boolean){
-    if(doContinue) this.timer.setMin(this.whereToContinue);
+    if(doContinue) this.timer.setSec(this.whereToContinue);
     this.canContinue = false;
   }
 
+
+  async deconnexion() {
+
+    this.saveMovie();
+    this.session.isconnected = false;
+    this.session.mail = "";
+    setTimeout(()=>{ this.router.navigate(['/']); }, 500);
+  }
+
+  async saveMovie(){
+    if(this.StartedWatching) {
+      await this.saveTime(this.movie.noMovie).catch(err =>{
+        console.log(err);
+      });
+      this.videoPlayer.nativeElement.style.backgroundImage = 'url(https://www.svgrepo.com/show/13672/play-button.svg)';
+    }
+  }
 }
