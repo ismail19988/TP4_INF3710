@@ -17,10 +17,13 @@ export class DatabaseService {
         keepAlive: true,
     };
 
+    hash: any;
+
     private pool: pg.Pool = new pg.Pool(this.connectionConfig);
 
     public constructor() {
         this.initalise();
+        this.hash = require('object-hash');
     }
 
     private async initalise() {
@@ -39,7 +42,7 @@ export class DatabaseService {
             .query("SELECT * FROM netflixDB.membre WHERE courriel = '" + mail + "'")
             .then(res => {
                 if (res.rowCount > 0) {
-                    password === res.rows[0].motdepasse
+                    this.hash(password) === res.rows[0].motdepasse
                         ? (answer = {
                               title: 'Success',
                               body: 'Connexion réussie. Bienvenue, ' + res.rows[0].nom + '!',
@@ -97,8 +100,8 @@ export class DatabaseService {
 
             userData.membreMensuel ?
             await this.pool.query(`
-            INSERT INTO netflixDB.membre VALUES('${ userData.mail }', '${ userData.password }', '${ userData.fName } ${ userData.lName }', '${ userData.adress }', '${ userData.postalCode }');
-            INSERT INTO netflixDB.membreMensuel VALUES('${ userData.mail }', '${ userData.password }', '${ userData.fName } ${ userData.lName }', '${ userData.adress }', '${ userData.postalCode }', '${ userData.price }', '${ userData.date }');
+            INSERT INTO netflixDB.membre VALUES('${ userData.mail }', '${ this.hash(userData.password) }', '${ userData.fName } ${ userData.lName }', '${ userData.adress }', '${ userData.postalCode }');
+            INSERT INTO netflixDB.membreMensuel VALUES('${ userData.mail }', '${ this.hash(userData.password) }', '${ userData.fName } ${ userData.lName }', '${ userData.adress }', '${ userData.postalCode }', '${ userData.price }', '${ userData.date }');
             `).then(()=>{
                 answer =  {
                     title: 'Success',
@@ -111,8 +114,8 @@ export class DatabaseService {
                 };
             }) :
             await this.pool.query(`
-            INSERT INTO netflixDB.membre VALUES('${ userData.mail }', '${ userData.password }', '${ userData.fName } ${ userData.lName }', '${ userData.adress }', '${ userData.postalCode }');
-            INSERT INTO netflixDB.membreVisionnement VALUES('${ userData.mail }', '${ userData.password }', '${ userData.fName } ${ userData.lName }', '${ userData.adress }', '${ userData.postalCode }', '0');;
+            INSERT INTO netflixDB.membre VALUES('${ userData.mail }', '${ this.hash(userData.password) }', '${ userData.fName } ${ userData.lName }', '${ userData.adress }', '${ userData.postalCode }');
+            INSERT INTO netflixDB.membreVisionnement VALUES('${ userData.mail }', '${ this.hash(userData.password) }', '${ userData.fName } ${ userData.lName }', '${ userData.adress }', '${ userData.postalCode }', '0');;
             `).then(()=>{
                 answer =  {
                     title: 'Success',

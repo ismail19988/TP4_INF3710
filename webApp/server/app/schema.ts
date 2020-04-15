@@ -5,7 +5,7 @@ CREATE SCHEMA netflixDB;
 
 CREATE TABLE IF NOT EXISTS netflixDB.membre (
 	courriel				VARCHAR(30),
-	motDePasse				VARCHAR(100),
+	motDePasse				VARCHAR(200),
 	nom						VARCHAR(30),
 	adressePostale			VARCHAR(40),
 	codePostal				VARCHAR(7),
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS netflixDB.membre (
 
 CREATE TABLE IF NOT EXISTS netflixDB.membreMensuel (
 	courriel				VARCHAR(30),
-	motDePasse				VARCHAR(100),
+	motDePasse				VARCHAR(200),
 	nom						VARCHAR(30),
 	adressePostale			VARCHAR(40),
 	codePostal				VARCHAR(7),
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS netflixDB.membreMensuel (
 
 CREATE TABLE IF NOT EXISTS netflixDB.membreVisionnement (
 	courriel				VARCHAR(30),
-	motDePasse				VARCHAR(100),
+	motDePasse				VARCHAR(200),
 	nom						VARCHAR(30),
 	adressePostale			VARCHAR(40),
 	codePostal				VARCHAR(7),
