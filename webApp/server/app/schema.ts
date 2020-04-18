@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS netflixDB.visionnement (
 CREATE TABLE IF NOT EXISTS netflixDB.dvdphysique (
 	numéroDVD				VARCHAR(5),
 	noFilm					INTEGER,
+	prix					FLOAT,
 	PRIMARY KEY (numéroDVD, noFilm),
 	FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm) ON DELETE CASCADE
 );
@@ -89,7 +90,7 @@ CREATE TABLE IF NOT EXISTS netflixDB.achat (
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.ceremonie (
-    idCeremonie                 VARCHAR(20),
+    idCeremonie                 INTEGER,
     maitreCeremonie             VARCHAR(20),
     dateCeremonie               DATE,
     lieu                        VARCHAR(20),
@@ -97,8 +98,8 @@ CREATE TABLE IF NOT EXISTS netflixDB.ceremonie (
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.categorieOscar (
+	idCeremonie                 INTEGER,
     nomCategorie                VARCHAR(20),
-    idCeremonie                 VARCHAR(20),
     filmGagnant                 INTEGER,
     PRIMARY KEY (nomCategorie, idCeremonie),
     FOREIGN KEY (idCeremonie) REFERENCES netflixDB.ceremonie(idCeremonie) ON DELETE CASCADE,
@@ -106,8 +107,8 @@ CREATE TABLE IF NOT EXISTS netflixDB.categorieOscar (
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.nomination (
+	idCeremonie              INTEGER,
 	categorie                VARCHAR(20),
-	idCeremonie              VARCHAR(20),
     noFilm                   INTEGER,
     PRIMARY KEY (categorie, idCeremonie, noFilm),
 	FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm) ON DELETE CASCADE,
