@@ -1,13 +1,13 @@
 SET search_path = netflixDB;
 
--- 1) Affichez toutes les informations sur un film spécifié par l'utilisateur (selon le titre)
--- ici nous supposons que le titre de la clause where sera entré par un utilisateur.
+-- 1) Affichez toutes les informations sur un film specifie par l'utilisateur (selon le titre)
+-- ici nous supposons que le titre de la clause where sera entre par un utilisateur.
 select titre, genre, dateproduction, duree, nomRole as participant, nom as nomParticipant
 from netflixdb.participation natural Join netflixdb.personne natural join netflixdb.film
 where titre = 'Harry Potter III';
 
 --2) Pour chaque genre de film, listez tous les titres de films ainsi que la dernière date à laquelle
--- un film a été acheté (DVD) ou visionné
+-- un film a ete achete (DVD) ou visionne
 select titre, genre,
 max(
 	case
@@ -18,24 +18,24 @@ max(
 from film f join (
 		select * from
 			(
-				select v.noFilm as numéroFilmVisionné, dateVisionnement
+				select v.noFilm as numeroFilmVisionne, dateVisionnement
 				from visionnement v
 			) visio
 			full join
 			(
-				select a.noFilm as numeroFilmAcheté, dateEnvoi
+				select a.noFilm as numeroFilmAchete, dateEnvoi
 				from achat a
 			) ach
-		on visio.numéroFilmVisionné = ach.numeroFilmAcheté
-	) r on r.numéroFilmVisionné = f.nofilm or r.numeroFilmAcheté = f.nofilm
+		on visio.numeroFilmVisionne = ach.numeroFilmAchete
+	) r on r.numeroFilmVisionne = f.nofilm or r.numeroFilmAchete = f.nofilm
 group by titre, genre
 order by genre;
 
 
 
 
--- 3) Pour chaque genre de film, trouvez les noms et courriels des membres qui les ont visionnés le
--- plus souvent. Par exemple, Amal Z est le membre qui a visionné le plus de documentaires
+-- 3) Pour chaque genre de film, trouvez les noms et courriels des membres qui les ont visionnes le
+-- plus souvent. Par exemple, Amal Z est le membre qui a visionne le plus de documentaires
 -- animaliers 
 select genre, nom, courriel, count(*) as nbVue
 from(
@@ -46,7 +46,7 @@ from(
 group by genre, nom, courriel
 order by nbVue desc;
 
--- 4)  Trouvez le nombre total de films groupés par réalisateur 
+-- 4)  Trouvez le nombre total de films groupes par realisateur 
 select nomRole, nom, count(*) as nbfilms
 from netflixdb.participation natural join netflixdb.film natural join netflixdb.personne
 where nomRole = 'Realisateur' 
@@ -54,7 +54,7 @@ group by nomRole, nom
 order by nbfilms desc;
 
 
--- 5) Trouvez les noms des membres dont le coût total d’achat de DVD est plus élevé que la moyenne
+-- 5) Trouvez les noms des membres dont le coût total d’achat de DVD est plus eleve que la moyenne
 select membre.nom as nom, sum(prix) as cout_total
 from netflixdb.membre as membre natural join achat natural join netflixdb.dvdPhysique
 group by nom
@@ -67,7 +67,7 @@ having sum(prix) > (
 );
 
 
--- 6) Ordonnez et retournez les films en termes de quantité totale vendue (DVD) et en nombre de 
+-- 6) Ordonnez et retournez les films en termes de quantite totale vendue (DVD) et en nombre de 
 -- visionnements 
 select titre, sum(count) as acces_total
 from(
@@ -87,28 +87,28 @@ group by noFilm, titre
 order by acces_total desc;
 
 
--- 7) Trouvez le titre et le prix des films qui n’ont jamais été commandés sous forme de DVD mais qui ont été visionnés plus de 10 fois 
--- comme il y'a plusieurs dvd, nous retournons la moyenne des prix de ces dvd pour evite une abiguité
+-- 7) Trouvez le titre et le prix des films qui n’ont jamais ete commandes sous forme de DVD mais qui ont ete visionnes plus de 10 fois 
+-- comme il y'a plusieurs dvd, nous retournons la moyenne des prix de ces dvd pour evite une abiguite
 select titre, avg(prix)
 from film f join (
 		select * from
 			(
-				select v.noFilm as numéroFilmVisionné, count(*) as visio_count
+				select v.noFilm as numeroFilmVisionne, count(*) as visio_count
 				from visionnement v
 				group by v.noFilm
 			) visio
 			full join
 			(
-				select a.noFilm as numeroFilmAcheté, count(*) as achat_count
+				select a.noFilm as numeroFilmAchete, count(*) as achat_count
 				from achat a
 				group by a.noFilm
 			) ach
-		on visio.numéroFilmVisionné = ach.numeroFilmAcheté
-	) r on r.numéroFilmVisionné = f.nofilm or r.numeroFilmAcheté = f.nofilm natural join dvdPhysique
+		on visio.numeroFilmVisionne = ach.numeroFilmAchete
+	) r on r.numeroFilmVisionne = f.nofilm or r.numeroFilmAchete = f.nofilm natural join dvdPhysique
 where r.visio_count > 10 and r.achat_count is null 
 group by titre;
 
--- 8) Trouvez le nom et date de naissance des acteurs qui jouent dans les films qui sont visionnés
+-- 8) Trouvez le nom et date de naissance des acteurs qui jouent dans les films qui sont visionnes
 -- le plus souvent (soit plus que la moyenne) 
 WITH info_acteur as (
 	SELECT p.nom as nomActeur, p.dateNaissance as naissanceActeur, COUNT(v.noFilm) AS myCount
@@ -123,9 +123,9 @@ WHERE myCount > (
 	FROM info_acteur
 );
 
--- 9) Trouvez le nom du ou des réalisateurs qui ont réalisé les films qui ont le plus grand nombre
--- de nominations aux oscars. Par exemple, Woody Allen et Steven Spielberg ont réalisé 10
--- films qui ont été nominés aux oscars. 
+-- 9) Trouvez le nom du ou des realisateurs qui ont realise les films qui ont le plus grand nombre
+-- de nominations aux oscars. Par exemple, Woody Allen et Steven Spielberg ont realise 10
+-- films qui ont ete nomines aux oscars. 
 WITH realisateur
 AS (
 	SELECT p.nom as nomRealisateur, COUNT(n.noFilm) as myCount
@@ -140,8 +140,8 @@ WHERE myCount = (
   FROM realisateur
 );
 
--- 10) Trouvez le nom des réalisateurs qui ont été le plus souvent nominés aux oscars mais qui
--- n’ont jamais gagné d’oscar
+-- 10) Trouvez le nom des realisateurs qui ont ete le plus souvent nomines aux oscars mais qui
+-- n’ont jamais gagne d’oscar
 WITH realisateur_nonGagnant
 AS (
 	SELECT p.nom as nomRealisateur, COUNT(n.noFilm) as myCount
@@ -160,8 +160,8 @@ WHERE myCount = (
 	FROM realisateur_nonGagnant
 );
 
--- 11) Trouvez les films (titre, année) qui ont gagné le plus d’oscars. Listez également leur
--- réalisateurs et leurs acteurs
+-- 11) Trouvez les films (titre, annee) qui ont gagne le plus d’oscars. Listez egalement leur
+-- realisateurs et leurs acteurs
 WITH film_acteur
 as (
 	SELECT DISTINCT f.noFilm as noFilm, f.titre as titreFilm, f.dateProduction as dateFilm, 
@@ -182,8 +182,8 @@ WHERE myCount = (
   FROM film_acteur
 );
 
--- 13) Comment a évolué la carrière de Woody Allen ? (On veut connaitre tous ses rôles dans un
--- film (réalisateur, acteur, etc.) du plus ancien au plus récent)
+-- 13) Comment a evolue la carrière de Woody Allen ? (On veut connaitre tous ses rôles dans un
+-- film (realisateur, acteur, etc.) du plus ancien au plus recent)
 SELECT nomRole, titre, dateProduction
 FROM netflixDB.participation NATURAL JOIN netflixDB.personne personne NATURAL JOIN netflixDB.film
 WHERE personne.nom = 'Woody Allen'

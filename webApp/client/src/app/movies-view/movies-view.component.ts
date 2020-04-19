@@ -98,10 +98,9 @@ export class MoviesViewComponent implements AfterViewInit, OnInit, OnDestroy {
 
   }
 
-  async saveTime(oldMovie:number){
+  async saveTime(oldMovie: number){
     return await new Promise((response, request)=>{
       this.communication.saveMovieTime(oldMovie, this.session.mail, this.timer.getSec()).subscribe((res) => {
-        console.log('Temps sauvegardé');
         response('saved');
       });
     })
