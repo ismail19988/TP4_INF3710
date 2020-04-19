@@ -23,4 +23,3 @@ npm-debug.log
 !systemjs.config.extras.js
 !tslint.json
 !tsconfig.json
-!package-lock.json
