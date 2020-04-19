@@ -27,11 +27,12 @@ INSERT INTO membre VALUES('andie@hotmail.com', '12345678mdp', 'pogdorica', '216 
 INSERT INTO membre VALUES('victor@hotmail.com', '123456789mdp', 'kim', '216 Kindersley Ave', 'H3R 1R6');
 INSERT INTO membre VALUES('finalUser@hotmail.com', '123456789mdp', 'eleven', '216 Kindersley Ave', 'H3R 1R6');
 
-INSERT INTO membreMensuel VALUES('yuhan@gmail.com', 'Mdp123', 'Li', '2075 rue Namur', 'H7M 5L1', 10.99, '2020-12-4');
-INSERT INTO membreMensuel VALUES('justin@hotmail.com', '123mdp', 'Trudeau', '216 Kindersley Ave', 'H3R 1R6', 10.99, '2021-01-01');
-INSERT INTO membreMensuel VALUES('dawut@hotmail.com', '12mdp', 'Esse', '216 Kindersley Ave', 'H3R 1R6', 11.99, '2021-01-01');
-INSERT INTO membreMensuel VALUES('niene@hotmail.com', '1234mdp', 'thon', '216 Kindersley Ave', 'H3R 1R6', 10.99, '2020-12-4');
-INSERT INTO membreMensuel VALUES('thxForInvite@hotmail.com', '12345mdp', 'patel', '216 Kindersley Ave', 'H3R 1R6', 11.99, '2021-01-01');
+INSERT INTO membreMensuel VALUES('yuhan@gmail.com', 'Mdp123', 'Li', '2075 rue Namur', 'H7M 5L1', 10.99,'2020-01-03', '2020-12-4');
+INSERT INTO membreMensuel VALUES('justin@hotmail.com', '123mdp', 'Trudeau', '216 Kindersley Ave', 'H3R 1R6', 10.99, '2020-01-03', '2021-01-01');
+INSERT INTO membreMensuel VALUES('dawut@hotmail.com', '12mdp', 'Esse', '216 Kindersley Ave', 'H3R 1R6', 11.99,'2020-01-03', '2021-01-01');
+INSERT INTO membreMensuel VALUES('niene@hotmail.com', '1234mdp', 'thon', '216 Kindersley Ave', 'H3R 1R6', 10.99,'2020-01-03', '2020-12-4');
+INSERT INTO membreMensuel VALUES('thxForInvite@hotmail.com', '12345mdp', 'patel', '216 Kindersley Ave', 'H3R 1R6', 11.99,'2020-01-03', '2021-01-01');
+
 
 INSERT INTO membreVisionnement VALUES('ismail@hotmail.com', 'mdp12345','Bakkouri', '6590 34e Avenue', 'H1T 3B4', 10);
 INSERT INTO membreVisionnement VALUES('123god@hotmail.com', '12345mdp', 'ashashahan', '216 Kindersley Ave', 'H3R 1R6', 1);
