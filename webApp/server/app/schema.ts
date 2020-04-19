@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS netflixDB.membreMensuel (
 	adressePostale			VARCHAR(40),
 	codePostal				VARCHAR(7),
 	prix_abonnement			FlOAT,
-	date_échéhance			DATE,
+	date_debut				DATE,
+	date_echehance			DATE,
 	PRIMARY KEY (courriel),
 	FOREIGN KEY (courriel) REFERENCES netflixDB.membre(courriel) ON DELETE CASCADE
 );
@@ -71,10 +72,10 @@ CREATE TABLE IF NOT EXISTS netflixDB.visionnement (
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.dvdphysique (
-	numéroDVD				VARCHAR(5),
+	numeroDVD				VARCHAR(5),
 	noFilm					INTEGER,
 	prix					FLOAT,
-	PRIMARY KEY (numéroDVD, noFilm),
+	PRIMARY KEY (numeroDVD, noFilm),
 	FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm) ON DELETE CASCADE
 );
 

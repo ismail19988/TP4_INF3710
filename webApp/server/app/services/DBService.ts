@@ -45,16 +45,16 @@ export class DatabaseService {
                     this.hash(password) === res.rows[0].motdepasse
                         ? (answer = {
                               title: 'Success',
-                              body: 'Connexion réussie. Bienvenue, ' + res.rows[0].nom + '!',
+                              body: 'Connexion reussie. Bienvenue, ' + res.rows[0].nom + '!',
                           })
                         : (answer = {
                               title: 'Fail',
-                              body: 'Connexion échouée. Courriel ou mot de passe incorrect.',
+                              body: 'Connexion echouee. Courriel ou mot de passe incorrect.',
                           });
                 } else {
                     answer = {
                         title: 'Fail',
-                        body: 'Connexion échouée. Courriel ou mot de passe incorrect.',
+                        body: 'Connexion echouee. Courriel ou mot de passe incorrect.',
                     };
                 }
             })
@@ -93,19 +93,25 @@ export class DatabaseService {
         if(exist) {
             answer =  {
                 title: 'Fail',
-                body: 'Enregistrement impossible. Un utilisateur avec ce courriel exist déjà.'
+                body: 'Enregistrement impossible. Un utilisateur avec ce courriel exist dejà.'
             }
 
         } else {
+            let date = new Date();
+            let dd = String(date.getDate()).padStart(2, '0');
+            let mm = String(date.getMonth() + 1).padStart(2, '0');
+            let yyyy = date.getFullYear();
+    
+            let today = yyyy + "-" + mm + "-" + dd;
 
             userData.membreMensuel ?
             await this.pool.query(`
             INSERT INTO netflixDB.membre VALUES('${ userData.mail }', '${ this.hash(userData.password) }', '${ userData.fName } ${ userData.lName }', '${ userData.adress }', '${ userData.postalCode }');
-            INSERT INTO netflixDB.membreMensuel VALUES('${ userData.mail }', '${ this.hash(userData.password) }', '${ userData.fName } ${ userData.lName }', '${ userData.adress }', '${ userData.postalCode }', '${ userData.price }', '${ userData.date }');
+            INSERT INTO netflixDB.membreMensuel VALUES('${ userData.mail }', '${ this.hash(userData.password) }', '${ userData.fName } ${ userData.lName }', '${ userData.adress }', '${ userData.postalCode }', '${ userData.price }', '${today}', '${ userData.date }');
             `).then(()=>{
                 answer =  {
                     title: 'Success',
-                    body: 'Enregistrement Réussi.'
+                    body: 'Enregistrement Reussi.'
                 }
             }).catch((err) => {
                 answer = {
@@ -119,7 +125,7 @@ export class DatabaseService {
             `).then(()=>{
                 answer =  {
                     title: 'Success',
-                    body: 'Enregistrement Réussi.'
+                    body: 'Enregistrement Reussi.'
                 }
             }).catch((err) => {
                 answer = {
@@ -235,7 +241,7 @@ export class DatabaseService {
         ).then(()=>{
             answer = {
                 title: 'Success',
-                body: 'Mise a jour du film réussie'
+                body: 'Mise a jour du film reussie'
             }
         }).catch((err)=>{
             console.log(err);
