@@ -117,25 +117,18 @@ CREATE TABLE IF NOT EXISTS netflixDB.nomination (
 CREATE TABLE IF NOT EXISTS netflixDB.personne(
     noPersonne                INTEGER,
     nom                    	  VARCHAR(20),
-    age                       INTEGER,
+    dateNaissance             date,
     nationalite               VARCHAR(20),
     sexe                      VARCHAR(10),
     PRIMARY KEY (noPersonne)
 );
 
 CREATE TABLE IF NOT EXISTS netflixDB.participation (
+	nomRole                   VARCHAR(20),
     noPersonne                INTEGER,
     noFilm                    INTEGER,
-    PRIMARY KEY (noPersonne, noFilm),
+	salaire                   FLOAT,
+    PRIMARY KEY (nomRole, noPersonne, noFilm),
     FOREIGN KEY (noPersonne) REFERENCES netflixDB.personne(noPersonne) ON DELETE CASCADE,
     FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm) ON DELETE CASCADE
-);
-CREATE TABLE IF NOT EXISTS netflixDB.role (
-    nom                        VARCHAR(20),
-	noPersonne                 INTEGER,
-	noFilm					   INTEGER,
-    salaire                    FLOAT,
-	PRIMARY KEY (nom, noPersonne, noFilm),
-	FOREIGN KEY (noFilm) REFERENCES netflixDB.film(noFilm) ON DELETE CASCADE,
-    FOREIGN KEY (noPersonne) REFERENCES netflixDB.personne(noPersonne) ON DELETE CASCADE
 );
