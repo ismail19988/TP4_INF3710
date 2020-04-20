@@ -31,9 +31,6 @@ from film f join (
 group by titre, genre
 order by genre;
 
-
-
-
 -- 3) Pour chaque genre de film, trouvez les noms et courriels des membres qui les ont visionnes le
 -- plus souvent. Par exemple, Amal Z est le membre qui a visionne le plus de documentaires
 -- animaliers 
