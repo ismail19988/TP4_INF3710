@@ -191,7 +191,7 @@ SELECT distinct p1.nom, p1.noPersonne AS no1, p2.nom as nom2, p2.noPersonne AS n
 ), 
 collegue AS (
   	SELECT part1.noPersonne AS no1, part2.noPersonne AS no2, COUNT(*) as nbCollab
-   		FROM netflixDB.participation part1  INNER JOIN netflixDB.participation part2 ON part1.noPersonne != part2.noPersonne
+   		FROM netflixDB.participation part1  INNER JOIN netflixDB.participation part2 ON part1.noPersonne > part2.noPersonne
    		WHERE part1.nofilm = part2.nofilm AND (part1.noPersonne, part2.noPersonne) IN (SELECT no1, no2 FROM paires_Qc)
   		GROUP BY(part1.noPersonne, part2.noPersonne)
 )
@@ -205,6 +205,7 @@ SELECT nomRole, titre, dateProduction
 FROM netflixDB.participation NATURAL JOIN netflixDB.personne personne NATURAL JOIN netflixDB.film
 WHERE personne.nom = 'Woody Allen'
 ORDER BY dateProduction;
+
 
 
 
