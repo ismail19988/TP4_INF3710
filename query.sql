@@ -182,6 +182,23 @@ WHERE myCount = (
   FROM film_acteur
 );
 
+-- 12) Quelles paires de femmes québécoises ont le plus souvent travaillé ensemble dans différents
+-- films ? 
+with paires_Qc as (
+SELECT distinct p1.nom, p1.noPersonne AS no1, p2.nom as nom2, p2.noPersonne AS no2
+	FROM netflixDB.personne p1 INNER JOIN netflixDB.personne p2 ON p1.noPersonne != p2.noPersonne
+	WHERE p1.nationalite = 'Quebecoise' AND p2.nationalite = 'Quebecoise' AND p1.sexe = 'F' AND p2.sexe = 'F'
+), 
+collegue AS (
+  	SELECT part1.noPersonne AS no1, part2.noPersonne AS no2, COUNT(*) as nbCollab
+   		FROM netflixDB.participation part1  INNER JOIN netflixDB.participation part2 ON part1.noPersonne != part2.noPersonne
+   		WHERE part1.nofilm = part2.nofilm AND (part1.noPersonne, part2.noPersonne) IN (SELECT no1, no2 FROM paires_Qc)
+  		GROUP BY(part1.noPersonne, part2.noPersonne)
+)
+select distinct p1.nom as nom1, p2.nom as nom2, nbCollab
+from collegue inner join netflixDB.personne p1 on p1.noPersonne = no1 inner join netflixDB.personne p2 on p2.noPersonne = no2
+where nbCollab is not null and nbCollab >= all (select nbCollab from collegue);
+
 -- 13) Comment a evolue la carrière de Woody Allen ? (On veut connaitre tous ses rôles dans un
 -- film (realisateur, acteur, etc.) du plus ancien au plus recent)
 SELECT nomRole, titre, dateProduction
